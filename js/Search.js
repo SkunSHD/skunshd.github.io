@@ -23,10 +23,6 @@ function Search() {
 				addItemsInPopup(getAllFromLocalStorage());
 			}
 		}
-		
-		searchInput.onblur = function() {
-			Methods.closePopupWindow();
-		}
 	}
 	
 	function findInLocalStorage() {
