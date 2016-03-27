@@ -1,30 +1,47 @@
 function Search() {
 	
 	var searchInput = document.querySelector('.find');
-	searchInput.onclick = function() {
-		Methods.closePopupWindow();
-		createSearchPopup(this);
-		// when in input already has text
-		if(this.value.length > 0) {
-			findInLocalStorage();
-		} else {
-			addItemsInPopup(getAllFromLocalStorage());
+	
+	this.start = function() {
+	
+		searchInput.onclick = function() {
+			Methods.closePopupWindow();
+			createSearchPopup(this);
+			// when in input already has text
+			if(this.value.trim().length > 0) {
+				findInLocalStorage();
+			} else {
+				addItemsInPopup(getAllFromLocalStorage());
+			}
+		}
+		
+		searchInput.onkeyup = function() {
+			if( this.value.trim().length > 0 ) {
+				findInLocalStorage();
+			} else {
+				clearAllItems();
+				addItemsInPopup(getAllFromLocalStorage());
+			}
+		}
+		
+		searchInput.onblur = function() {
+			Methods.closePopupWindow();
 		}
 	}
-	searchInput = document.querySelector('.find').onkeyup = findInLocalStorage;
 	
 	function findInLocalStorage() {
-
-		var inputField = document.getElementsByClassName('find')[0];
 		clearAllItems();
+
+		// var inputField = document.getElementsByClassName('find')[0];
+		var inputText = searchInput.value.trim();
 		
 		var arrElemFromLocalStorage = getAllFromLocalStorage();
 		var arrSearchResult=[];
 
 		for(var i=0; i< arrElemFromLocalStorage.length; i++) {
-			if(arrElemFromLocalStorage[i].date.toLowerCase().indexOf(inputField.value) != -1) arrSearchResult.push(arrElemFromLocalStorage[i]);
-			if(arrElemFromLocalStorage[i].title.toLowerCase().indexOf(inputField.value) != -1) arrSearchResult.push(arrElemFromLocalStorage[i]);
-			if(arrElemFromLocalStorage[i].id.toLowerCase().indexOf(inputField.value) != -1) arrSearchResult.push(arrElemFromLocalStorage[i]);
+			if(arrElemFromLocalStorage[i].date.toLowerCase().indexOf(inputText) != -1) arrSearchResult.push(arrElemFromLocalStorage[i]);
+			if(arrElemFromLocalStorage[i].title.toLowerCase().indexOf(inputText) != -1) arrSearchResult.push(arrElemFromLocalStorage[i]);
+			if(arrElemFromLocalStorage[i].id.toLowerCase().indexOf(inputText) != -1) arrSearchResult.push(arrElemFromLocalStorage[i]);
 		}
 		addItemsInPopup(arrSearchResult);
 	}
@@ -34,7 +51,7 @@ function Search() {
 		var arr = [];
 		
 		for(var i = 0; i <= localStorage.length; i++) {
-			if(localStorage.key(i) != null && localStorage.key(i).indexOf('.') == 2 && localStorage.key(i).indexOf('.', 3) == 5) {
+			if(localStorage.key(i) != null && localStorage.key(i).length == 10 && localStorage.key(i).indexOf('.') == 2 && localStorage.key(i).indexOf('.', 3) == 5) {
 
 				arr.push({
 					id: localStorage.key(i),
@@ -55,7 +72,7 @@ function Search() {
 			var item = createOneItem(arrElemFromLocalStorage[i]);
 			popupWindow.appendChild(item);
 		}
-		// alert(popupWindow.offsetHeight);
+		
 		if(popupWindow.offsetHeight < 375) popupWindow.style.overflowY = 'hidden';
 		else popupWindow.style.overflowY = 'scroll';
 	}
@@ -127,6 +144,7 @@ function Search() {
 		var searchItemsContainer = document.getElementsByClassName('search-popup-wrapper')[0];
 		while(searchItemsContainer.firstChild) searchItemsContainer.firstChild.remove();
 	}
+	
 }
   
-new Search();
+new Search().start();

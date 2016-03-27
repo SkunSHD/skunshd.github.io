@@ -253,11 +253,6 @@ function SelectedCell() {
 		}
 	}
 	
-	// Closing any popups if happend click on 'clean' areas
-	document.body.addEventListener('click', function(event) {
-		if(event.target.id == 'page' || event.target.tagName == 'HEADER' || event.target.tagName == 'NAV' ) 	Methods.closePopupWindow();;
-	});
-
 	//flag == true -> create window for new note || flag == false -> create window for edit note
 	function addWindowEvent(target, flag) {
 		// create event div
