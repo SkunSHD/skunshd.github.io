@@ -1,1 +1,38 @@
-Hello World
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+	<title>CallendarJS</title>
+	<link href="css/style.css" type="text/css" rel="stylesheet" />
+	<script src="js/ShowAndNavigate.js" defer></script>
+	<script src="js/MainFeateres.js" defer></script>
+	<script src="js/Search.js" defer></script>
+</head>
+<body>
+	<div id="page">
+		<header>
+			<nav>
+				<button name="add" onClick="new WindowFastNote().addPopupWindow()">Fast Note</button>
+				<button name="renew" onClick="new Calendar().createCalendar()">Refresh</button>
+				<!-- Poisk -->
+				<div class="search-box">
+					<div class="search-img"></div>
+					<input type="search" name="search-area" class="find" placeholder="Событие, дата или участник"/>
+				</div>
+			</nav><!--nav-->
+		</header>
+
+		<div id="content">
+			<time id="day-select">
+
+				<a href="#" id="button-previous" class="button" onClick="ShowDateMethods.listener()()" >Previous month</a>
+				<a href="#" id="button-next"  class="button" onClick="ShowDateMethods.listener()()" >Next month</a>
+				<div id="today-button" onClick="ShowDateMethods.showToday()">Today</div>
+				<!-- Heute ist -->
+			</time> <!-- day-select-->
+			
+			<div id="calendar"></div>
+			
+		</div><!--content-->
+	</div><!--page-->
+</body>
+</html>
