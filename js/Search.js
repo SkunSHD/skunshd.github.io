@@ -3,7 +3,6 @@ function Search() {
 	var searchInput = document.querySelector('.find');
 	
 	this.start = function() {
-	
 		searchInput.onclick = function() {
 			Methods.closePopupWindow();
 			createSearchPopup(this);
@@ -16,10 +15,11 @@ function Search() {
 		}
 		
 		searchInput.onkeyup = function() {
+			clearAllItems();
 			if( this.value.trim().length > 0 ) {
 				findInLocalStorage();
-			} else {
-				clearAllItems();
+			} else {				
+				//findInLocalStorage();
 				addItemsInPopup(getAllFromLocalStorage());
 			}
 		}
@@ -28,8 +28,7 @@ function Search() {
 	function findInLocalStorage() {
 		clearAllItems();
 
-		// var inputField = document.getElementsByClassName('find')[0];
-		var inputText = searchInput.value.trim();
+		var inputText = searchInput.value.trim().toLowerCase();
 		
 		var arrElemFromLocalStorage = getAllFromLocalStorage();
 		var arrSearchResult=[];
