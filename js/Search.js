@@ -130,9 +130,13 @@ function Search() {
 		new Calendar().createCalendar();
 		ShowDateMethods.showDate();
 		
-		// highlight selected in search cell
-		var arr = document.querySelectorAll('.td-with-note');
-		for(var i = 0; i<arr.length; i++) if(arr[i].id == this.id) arr[i].classList.add('highlight');
+		// highlight selected in search popup cell
+		var arr = document.querySelectorAll('.td-with-note, .today');
+
+		for(var i = 0; i<arr.length; i++) if(arr[i].id == this.id) { 
+			arr[i].classList.add('highlight');
+			break;
+		}
 	}
 	
 	function clearAllItems() {
