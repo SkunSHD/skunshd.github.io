@@ -1,11 +1,13 @@
 (function() {
+    'use strict';
+
     function Search() {
 
         var searchInput = document.querySelector('.find');
 
         this.start = function() {
             searchInput.onclick = function() {
-                Methods.closePopupWindow();
+                window.app.Methods.closePopupWindow();
                 createSearchPopup(this);
                 // when in input already has text
                 if(this.value.trim().length > 0) {
@@ -52,7 +54,7 @@
                     arr.push({
                         id: localStorage.key(i),
                         title: localStorage[localStorage.key(i)],
-                        date: Methods.parseDate(localStorage.key(i))
+                        date: window.app.Methods.parseDate(localStorage.key(i))
                     });
                 }
             }
@@ -74,17 +76,17 @@
         }
 
         function createOneItem(note) {
-            var container = Methods.createAndSetTag('div', 'search-result__container');
+            var container = window.app.Methods.createAndSetTag('div', 'search-result__container');
 
             container.id = note.id;
             container.onclick = goToDate;
             container.onmouseover = highlightSearch;
 
-            var item = Methods.createAndSetTag('div', 'search-result__item', container);
-            Methods.createAndSetTag('div', 'search-result__line', container);
+            var item = window.app.Methods.createAndSetTag('div', 'search-result__item', container);
+            window.app.Methods.createAndSetTag('div', 'search-result__line', container);
 
-            Methods.createAndSetTag('div', 'search-result__item-title', item, Methods.textCut(note.title.split('/')[0]) );
-            Methods.createAndSetTag('div', 'search-result__item-date', item, note.date);
+            window.app.Methods.createAndSetTag('div', 'search-result__item-title', item, window.app.Methods.textCut(note.title.split('/')[0]) );
+            window.app.Methods.createAndSetTag('div', 'search-result__item-date', item, note.date);
 
             return container;
         }
@@ -93,10 +95,10 @@
         function createSearchPopup(event){
             var coords = event.getBoundingClientRect();
 
-            var container = Methods.createAndSetTag('div', 'search-popup');
-            Methods.createAndSetTag('div', 'search-pointer', container);
+            var container = window.app.Methods.createAndSetTag('div', 'search-popup');
+            window.app.Methods.createAndSetTag('div', 'search-pointer', container);
 
-            Methods.createAndSetTag('div', 'search-popup-wrapper', container);
+            window.app.Methods.createAndSetTag('div', 'search-popup-wrapper', container);
 
             var top = coords.top + event.offsetHeight + document.body.scrollTop + 15;
             var left = coords.left;
@@ -123,13 +125,13 @@
         function goToDate() {
             var strGoToDate = this.id;
 
-            var goToDate = ShowDateMethods.parseStrInDate(strGoToDate);
+            var goToDate = window.app.ShowDateMethods.parseStrInDate(strGoToDate);
 
             localStorage.setItem('month', goToDate.getMonth());
             localStorage.setItem('year', goToDate.getFullYear());
 
-            new Calendar().createCalendar();
-            ShowDateMethods.showDate();
+            new window.app.Calendar().createCalendar();
+            window.app.ShowDateMethods.showDate();
 
             // highlight selected in search popup cell
             var arr = document.querySelectorAll('.td-with-note, .today');
@@ -147,5 +149,6 @@
 
     }
 
-    new Search().start();
+    window.app = window.app || {};
+    window.app.Search = Search;
 })();

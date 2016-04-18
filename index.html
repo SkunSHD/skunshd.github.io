@@ -6,13 +6,14 @@
 	<script src="js/ShowAndNavigate.js" defer></script>
 	<script src="js/MainFeateres.js" defer></script>
 	<script src="js/Search.js" defer></script>
+    <script src="js/app.js" defer></script>
 </head>
 <body>
 	<div id="page">
 		<header>
 			<nav>
-				<button name="add" onClick="new WindowFastNote().addPopupWindow()">Fast Note</button>
-				<button name="renew" onClick="new Calendar().createCalendar()">Refresh</button>
+				<button name="add" onClick="new app.WindowFastNote().addPopupWindow()">Fast Note</button>
+				<button name="renew" onClick="new app.Calendar().createCalendar()">Refresh</button>
 				<!-- Poisk -->
 				<div class="search-box">
 					<div class="search-img"></div>
@@ -24,9 +25,9 @@
 		<div id="content">
 			<time id="day-select">
 
-				<a href="#" id="button-previous" class="button" onClick="ShowDateMethods.listener()()" >Previous month</a>
-				<a href="#" id="button-next"  class="button" onClick="ShowDateMethods.listener()()" >Next month</a>
-				<div id="today-button" onClick="ShowDateMethods.showToday()">Today</div>
+				<a href="#" id="button-previous" class="button" onClick="app.ShowDateMethods.listener()()" >Previous month</a>
+				<a href="#" id="button-next"  class="button" onClick="app.ShowDateMethods.listener()()" >Next month</a>
+				<div id="today-button" onClick="app.ShowDateMethods.showToday()">Today</div>
 				<!-- Heute ist -->
 			</time> <!-- day-select-->
 			

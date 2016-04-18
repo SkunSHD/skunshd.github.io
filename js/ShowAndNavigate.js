@@ -1,8 +1,9 @@
-(function() {
-    function ShowDateMethods() {
-    }
+(function(window) {
+    'use strict';
 
-// Monat und Jar aus localStorage
+    function ShowDateMethods() {}
+
+    // Monat und Jar aus localStorage
     ShowDateMethods.getLocalDateObj = function() {
         var monthString = localStorage.getItem('month');
         var yearString = localStorage.getItem('year');
@@ -23,7 +24,7 @@
         localStorage.setItem('month', today.getMonth());
         localStorage.setItem('year', today.getFullYear());
 
-        new Calendar().createCalendar();
+        new window.app.Calendar().createCalendar();
         ShowDateMethods.showDate();
     }
 
@@ -33,19 +34,19 @@
     }
 
     ShowDateMethods.listener = function() {
-        var calendar = new Calendar();
+        var calendar = new window.app.Calendar();
         return function() {
             var target = event.target;
             if(target.id == 'button-next') calendar.nextMonthOrYear();
             if(target.id == 'button-previous') calendar.previousMonthOrYear();
         }
-    }
+    };
 
     ShowDateMethods.showDate = function() {
         var parent = document.getElementById('day-select');
         // first time adding date or not
         if(parent.children[1].className != 'date-indicator') {
-            date = new Date();
+            var date = new Date();
             localStorage.setItem('month', date.getMonth());
             localStorage.setItem('year', date.getFullYear());
 
@@ -71,12 +72,13 @@
                 selectedDateString = startYear + ' - ' + endYear;
             }
 
-            var p = Methods.createAndSetTag('p', 'date-indicator', '', selectedDateString);
+            var p = window.app.Methods.createAndSetTag('p', 'date-indicator', '', selectedDateString);
             parent.replaceChild(p, parent.children[1]);
         }
         parent.onclick = function() { if(event.target.className == 'date-indicator') showMonthOrYear.getInstance().getMonthOrYear(); };
     }
-// single tone for MonthYearView construnctor
+
+    // single tone for MonthYearView constructor
     var showMonthOrYear = (function() {
         var instance;
 
@@ -95,10 +97,10 @@
         }
     })();
 
-// Show monthlist or yearlist
+    // Show monthlist or yearlist
     function MonthYearView() {
         this.getMonthOrYear = function() {
-            Methods.closePopupWindow();
+            window.app.Methods.closePopupWindow();
             if( !document.querySelector('.calendar-list-month') && !document.querySelector('.calendar-list-year') ) showMonthList();
             else if( !document.querySelector('.calendar-list-year')) this.showYearList();
         }
@@ -106,10 +108,10 @@
         function showMonthList() {
             var wrapper = document.getElementById('calendar');
 
-            var container = Methods.createAndSetTag('div');
+            var container = window.app.Methods.createAndSetTag('div');
 
-            var ol = Methods.createAndSetTag('ol', 'calendar-list-month');
-            var clear = Methods.createAndSetTag('div', 'calendar-clear');
+            var ol = window.app.Methods.createAndSetTag('ol', 'calendar-list-month');
+            var clear = window.app.Methods.createAndSetTag('div', 'calendar-clear');
 
             var getMonth = monthCounter();
 
@@ -117,7 +119,7 @@
                 // Methods.createAndSetTag = function(tag, className, container, text)
                 var date = new Date();
 
-                var currentLi = Methods.createAndSetTag('li', 'calendar-left-side calendar-list-item calendar-list-item', ol, '<span>' + getMonth() + '</span>', goInMonthYear );
+                var currentLi = window.app.Methods.createAndSetTag('li', 'calendar-left-side calendar-list-item calendar-list-item', ol, '<span>' + getMonth() + '</span>', goInMonthYear );
                 currentLi.setAttribute('index', i);
                 ol.appendChild(currentLi);
             }
@@ -145,16 +147,16 @@
         this.showYearList = function () {
 
             var wrapper = document.getElementById('calendar');
-            var container = Methods.createAndSetTag('div');
+            var container = window.app.Methods.createAndSetTag('div');
 
-            var ol = Methods.createAndSetTag('ol', 'calendar-list-year');
-            var clear = Methods.createAndSetTag('div', 'calendar-clear');
+            var ol = window.app.Methods.createAndSetTag('ol', 'calendar-list-year');
+            var clear = window.app.Methods.createAndSetTag('div', 'calendar-clear');
 
             var getYear = yearCounter();
 
             for(var i=0; i< 12; i++) {
                 var currentYear = getYear();
-                var currentLi = Methods.createAndSetTag('li', 'calendar-left-side calendar-list-item calendar-list-item', ol, '<span>' + currentYear + '</span>', goInMonthYear);
+                var currentLi = window.app.Methods.createAndSetTag('li', 'calendar-left-side calendar-list-item calendar-list-item', ol, '<span>' + currentYear + '</span>', goInMonthYear);
                 currentLi.setAttribute('index', currentYear);
                 ol.appendChild(currentLi);
 
@@ -182,7 +184,7 @@
         function goInMonthYear(event) {
             if(document.querySelector('.calendar-list-month')) {
                 localStorage.setItem('month', this.getAttribute('index'));
-                new Calendar().createCalendar();
+                new window.app.Calendar().createCalendar();
             }
             if(document.querySelector('.calendar-list-year')) {
                 localStorage.setItem('year', this.getAttribute('index'));
@@ -192,6 +194,7 @@
         }
     }
 
-// hier starts first function in document
-    ShowDateMethods.showDate();
-})();
+    window.app = window.app || {};
+    window.app.ShowDateMethods = ShowDateMethods;
+
+})(window);
