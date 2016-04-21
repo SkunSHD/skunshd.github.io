@@ -27,7 +27,7 @@
         new window.app.Calendar().createCalendar();
         ShowDateMethods.showDate();
     }
-
+ 
     ShowDateMethods.setMonthYearInLocalStorage = function(month, year) {
         localStorage.setItem(month, today.getMonth());
         localStorage.setItem(year, today.getFullYear());
