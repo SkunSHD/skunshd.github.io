@@ -1,4 +1,4 @@
-/* global app, $on */
+﻿/* global app, $on */
 (function() {
     'use strict';
 
@@ -8,8 +8,11 @@
         this.showDateMethods = app.ShowDateMethods;
         this.showDateMethods.showDate();
 
-        this.calendar = new app.Calendar();
-        this.calendar.createCalendar();
+        // this.calendar = new app.Calendar();
+        // this.calendar.createCalendar();
+		
+		this.view = new app.View();
+		this.view.createCalendar();
 
         this.search = new app.Search();
         this.search.start();

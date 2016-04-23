@@ -68,11 +68,13 @@
         }
     }
 	*/
+	
+	/*
     <!-- CALENDAR -->
     function Calendar() {
 
         this.createCalendar = function () {
-            Methods.closePopupWindow();
+            // Methods.closePopupWindow();
 
             var monthOutLS = localStorage.getItem('month');
             var calendarElem = document.getElementById('calendar');
@@ -237,8 +239,9 @@
             }
             window.app.ShowDateMethods.showDate();
         }
-	
+		
     }// <!-- CALENDAR CLOSAED OBJECT-->
+	*/
 	
 	/*
 	// Create, edit, del popup windows hier
@@ -485,7 +488,7 @@
 	*/
    
 
-// Static methods
+	// Static methods
     function Methods() {
     }
 
@@ -620,7 +623,7 @@
     };
 
     window.app = window.app || {};
-    window.app.Calendar = Calendar;
+    // window.app.Calendar = Calendar;
     window.app.Methods = Methods;
     // window.app.WindowFastNote = WindowFastNote;
 
