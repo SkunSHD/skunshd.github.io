@@ -1,6 +1,8 @@
-(function (window) {
+(function() {
 	'use strict';
+	
 	function View() {
+	
 		this.createCalendar = function () {
 			// Methods.closePopupWindow();
 
@@ -32,36 +34,36 @@
 			// filling main table
 			while (d.getMonth() == monthOutLS) {
 				// days with notes
-				if (localStorage.getItem(Methods.formatDate(d))) {
-					var allInfo = localStorage.getItem(Methods.formatDate(d));
+				if (localStorage.getItem(window.app.Methods.formatDate(d))) {
+					var allInfo = localStorage.getItem(window.app.Methods.formatDate(d));
 					var arrInfo = allInfo.split('/');
 					var event, names, description, heighlichtClass, heuteTag = '';
 
-					event = Methods.textCut(arrInfo[0]);
-					names = Methods.textCut(arrInfo[1]);
-					description = Methods.textCut(arrInfo[2]);
+					event = window.app.Methods.textCut(arrInfo[0]);
+					names = window.app.Methods.textCut(arrInfo[1]);
+					description = window.app.Methods.textCut(arrInfo[2]);
 
 					// heightlicht today check
-					Methods.formatDate(d) == Methods.formatDate(today) ? heighlichtClass = 'today' : heighlichtClass = 'td-with-note';
+					window.app.Methods.formatDate(d) == window.app.Methods.formatDate(today) ? heighlichtClass = 'today' : heighlichtClass = 'td-with-note';
 					// first week check and add week names
 					if (dayFlag < 7) {
 						heuteTag = tagsName[getDay(d)] + ', ';
 						dayFlag++;
 					}
 
-					table += '<td id="' + Methods.formatDate(d) + '" class="' + heighlichtClass + '">' + heuteTag + d.getDate() + '<div id="event-container">' +
+					table += '<td id="' + window.app.Methods.formatDate(d) + '" class="' + heighlichtClass + '">' + heuteTag + d.getDate() + '<div id="event-container">' +
 						'<h5>' + event + '</h5>' + '<p class="event-names">' + names + '</p>' + '<p class="event-description">' + description + '</p>' + '</div>' + '</td>';
 
 					// days without notes
 				} else {
-					Methods.formatDate(d) == Methods.formatDate(today) ? heighlichtClass = 'class ="today"' : heighlichtClass = '';
+					window.app.Methods.formatDate(d) == window.app.Methods.formatDate(today) ? heighlichtClass = 'class ="today"' : heighlichtClass = '';
 					// first week check and add week names
 					heuteTag = '';
 					if (dayFlag < 7) {
 						heuteTag = tagsName[getDay(d)] + ', ';
 						dayFlag++;
 					}
-					table += '<td id="' + Methods.formatDate(d) + '" ' + heighlichtClass + '>' + heuteTag + d.getDate() + '</td>';
+					table += '<td id="' + window.app.Methods.formatDate(d) + '" ' + heighlichtClass + '>' + heuteTag + d.getDate() + '</td>';
 				}
 
 				if (getDay(d) % 7 == 6) { // Sonntag is last day - go in next line
@@ -96,17 +98,18 @@
 			} else {
 				calendarElem.appendChild(tableElem);
 			}
+			// Days ago
+			function daysAgo(date, days) {
+				var dateCopy = new Date(date);
+				dateCopy.setDate(date.getDate() - days);
+				return dateCopy.getDate();
+			}
+		
 			// add opportunity to select cells
 			// new SelectedCell();
 		}
 		<!-- END OF CALLENDAR METHOD-->
 		/*
-		// Days ago
-		function daysAgo(date, days) {
-			var dateCopy = new Date(date);
-			dateCopy.setDate(date.getDate() - days);
-			return dateCopy.getDate();
-		}
 		
 		this.nextMonthOrYear = function () {
 			if (document.querySelector('.table')) {
@@ -173,4 +176,4 @@
 	
 	window.app = window.app || {};
 	window.app.View = View;
-}(window));
+})();
