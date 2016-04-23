@@ -13,7 +13,7 @@
         // this.calendar = new app.Calendar();
         // this.calendar.createCalendar();
 		
-		this.view = new app.View();
+		this.view = new app.View(this.storage);
 		this.view.createCalendar();
 
         this.search = new app.Search();

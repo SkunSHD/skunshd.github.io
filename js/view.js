@@ -1,13 +1,14 @@
 (function (window) {
 	'use strict';
 	
-	function View() {
-	
+	function View(storage) {
+		this.storage = storage;
+		
 		this.createCalendar = function () {
 			// Methods.closePopupWindow();
 
 			// var monthOutLS = localStorage.getItem('month');
-			var monthOutLS = window.app.Store.get('month');
+			var monthOutLS = storage.get('month');
 			alert(monthOutLS);
 			var calendarElem = document.getElementById('calendar');
 
