@@ -1,4 +1,4 @@
-(function() {
+(function (window) {
     'use strict';
 
     function Search() {
@@ -151,4 +151,4 @@
 
     window.app = window.app || {};
     window.app.Search = Search;
-})();
+})(window);

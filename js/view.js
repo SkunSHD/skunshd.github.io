@@ -1,4 +1,4 @@
-(function() {
+(function (window) {
 	'use strict';
 	
 	function View() {
@@ -35,6 +35,7 @@
 			while (d.getMonth() == monthOutLS) {
 				// days with notes
 				if (localStorage.getItem(window.app.Methods.formatDate(d))) {
+				
 					var allInfo = localStorage.getItem(window.app.Methods.formatDate(d));
 					var arrInfo = allInfo.split('/');
 					var event, names, description, heighlichtClass, heuteTag = '';
@@ -176,4 +177,4 @@
 	
 	window.app = window.app || {};
 	window.app.View = View;
-})();
+})(window);
