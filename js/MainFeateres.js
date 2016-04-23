@@ -1,6 +1,7 @@
 (function (window) {
     'use strict';
-
+	
+	/*
     // Fast note
     function WindowFastNote() {
 
@@ -31,7 +32,8 @@
             document.body.appendChild(container);
             document.querySelector('.input-popup-fast').focus();
         }
-
+	*/
+	/*
         function saveFastNote() {
             var now = window.app.ShowDateMethods.getLocalDateObj();
             var info = document.body.querySelector('.input-popup-fast').value.trim();
@@ -65,7 +67,7 @@
             cell.appendChild(div);
         }
     }
-
+	*/
     <!-- CALENDAR -->
     function Calendar() {
 
@@ -165,7 +167,7 @@
                 calendarElem.appendChild(tableElem);
             }
             // add opportunity to select cells
-            new SelectedCell();
+            // new SelectedCell();
         }
         <!-- END OF CALLENDAR METHOD-->
 
@@ -175,7 +177,7 @@
             dateCopy.setDate(date.getDate() - days);
             return dateCopy.getDate();
         }
-
+		
         this.nextMonthOrYear = function () {
             if (document.querySelector('.table')) {
                 var month = parseInt(localStorage.getItem('month'));
@@ -235,9 +237,11 @@
             }
             window.app.ShowDateMethods.showDate();
         }
+	
     }// <!-- CALENDAR CLOSAED OBJECT-->
-
-// Create, edit, del popup windows hier
+	
+	/*
+	// Create, edit, del popup windows hier
     function SelectedCell() {
         var table = document.getElementsByTagName('table')[0];
         table.className = 'table';
@@ -257,12 +261,13 @@
                 target = target.parentNode;
             }
         }
-
+		
+		
         // Closing any popups if clicked on 'clean' areas
         document.body.addEventListener('click', function (event) {
             if (event.target.id == 'page' || event.target.tagName == 'HEADER' || event.target.tagName == 'NAV')    Methods.closePopupWindow();
         });
-
+		
         //flag == true -> create window for new note || flag == false -> create window for edit note
         function addWindowEvent(target, flag) {
             // create event div
@@ -375,6 +380,7 @@
             // focus on first line
             if (document.getElementsByName('event')[0]) document.getElementsByName('event')[0].focus();
         }
+		
 
         function delLetters(field) {
             var value = field.value;
@@ -475,8 +481,9 @@
             Methods.closePopupWindow();
         }
     }
-
-    <!-- SelectedCell -->
+	 <!-- SelectedCell -->
+	*/
+   
 
 // Static methods
     function Methods() {
@@ -615,6 +622,6 @@
     window.app = window.app || {};
     window.app.Calendar = Calendar;
     window.app.Methods = Methods;
-    window.app.WindowFastNote = WindowFastNote;
+    // window.app.WindowFastNote = WindowFastNote;
 
 })(window);
