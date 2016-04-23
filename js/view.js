@@ -6,7 +6,9 @@
 		this.createCalendar = function () {
 			// Methods.closePopupWindow();
 
-			var monthOutLS = localStorage.getItem('month');
+			// var monthOutLS = localStorage.getItem('month');
+			var monthOutLS = window.app.Store.get('month');
+			alert(monthOutLS);
 			var calendarElem = document.getElementById('calendar');
 
 			if (calendarElem.firstChild && calendarElem.firstChild.tagName == 'DIV') calendarElem.firstChild.remove();

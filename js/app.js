@@ -5,6 +5,8 @@
     function MyApp() {}
 
     MyApp.prototype.init = function() {
+		this.storage = new app.Store();
+	
         this.showDateMethods = app.ShowDateMethods;
         this.showDateMethods.showDate();
 
