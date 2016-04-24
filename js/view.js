@@ -2,14 +2,12 @@
 	'use strict';
 	
 	function View(storage) {
-		this.storage = storage;
 		
 		this.createCalendar = function () {
 			// Methods.closePopupWindow();
 
-			// var monthOutLS = localStorage.getItem('month');
 			var monthOutLS = storage.get('month');
-			alert(monthOutLS);
+			
 			var calendarElem = document.getElementById('calendar');
 
 			if (calendarElem.firstChild && calendarElem.firstChild.tagName == 'DIV') calendarElem.firstChild.remove();
@@ -37,9 +35,9 @@
 			// filling main table
 			while (d.getMonth() == monthOutLS) {
 				// days with notes
-				if (localStorage.getItem(window.app.Methods.formatDate(d))) {
+				if (storage.get(d)) {
 				
-					var allInfo = localStorage.getItem(window.app.Methods.formatDate(d));
+					var allInfo = storage.get(d);
 					var arrInfo = allInfo.split('/');
 					var event, names, description, heighlichtClass, heuteTag = '';
 

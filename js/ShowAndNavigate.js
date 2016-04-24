@@ -1,7 +1,9 @@
 (function(window) {
     'use strict';
 
-    function ShowDateMethods() {}
+    function ShowDateMethods() {
+		
+	}
 
     // Monat und Jar aus localStorage
     ShowDateMethods.getLocalDateObj = function() {
@@ -47,8 +49,8 @@
         // first time adding date or not
         if(parent.children[1].className != 'date-indicator') {
             var date = new Date();
-            localStorage.setItem('month', date.getMonth());
-            localStorage.setItem('year', date.getFullYear());
+            window.app.Store.set('month', date.getMonth());
+            window.app.Store.set('year', date.getFullYear());
 
             var dateString = date.toLocaleString('en', { year: 'numeric', month: 'long' });
 
