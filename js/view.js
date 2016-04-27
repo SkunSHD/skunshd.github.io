@@ -1,12 +1,12 @@
 (function (window) {
 	'use strict';
 	
-	function View(storage) {
+	function View() {
 		
 		this.createCalendar = function () {
 			// Methods.closePopupWindow();
 
-			var monthOutLS = storage.get('month');
+			var monthOutLS = window.app.storage.getData('month');
 			
 			var calendarElem = document.getElementById('calendar');
 
@@ -35,9 +35,9 @@
 			// filling main table
 			while (d.getMonth() == monthOutLS) {
 				// days with notes
-				if (storage.get(d)) {
+				if (window.app.storage.getData(d)) {
 				
-					var allInfo = storage.get(d);
+					var allInfo = window.app.storage.getData(d);
 					var arrInfo = allInfo.split('/');
 					var event, names, description, heighlichtClass, heuteTag = '';
 

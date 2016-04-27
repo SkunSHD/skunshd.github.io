@@ -48,7 +48,7 @@
             var parseDate = new Date(dateStr[1] + ' ' + dateStr[0] + ', ' + now.getFullYear());
 
             // right fast note in localStorage whitout participants and description
-            localStorage.setItem(Methods.formatDate(parseDate), eventText + '//');
+            window.app.storage.setData(Methods.formatDate(parseDate), eventText + '//');
             //if add in another month -> don't add note in table now
             if (parseDate.getMonth() != now.getMonth()) return;
 
@@ -149,7 +149,7 @@
                 }, 'onclick');
                 Methods.createAndAddInput('textarea', 'input-description', 'description', form, 'Event description');
 
-                var arrInfo = localStorage.getItem(target.id).split('/');
+                var arrInfo = window.app.storage.getData(target.id).split('/');
 
                 if (arrInfo[0] != 'undefined') form.eventEdit.value = arrInfo[0];
                 form.dateEdit.value = Methods.parseDate(target.id);
@@ -232,7 +232,7 @@
             var form = document.forms.popup;
             var formObj = getFormData(form);
 
-            localStorage.setItem(formObj.date, formObj.event + '/' + formObj.names + '/' + formObj.description);
+            window.app.storage.setData(formObj.date, formObj.event + '/' + formObj.names + '/' + formObj.description);
 
             setFormDataInTable(formObj);
         }
