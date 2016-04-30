@@ -1,7 +1,7 @@
 (function (window) {
 	'use strict';
 	
-	function View() {
+	function View(template) {
 		
 		this.createCalendar = function () {
 			// Methods.closePopupWindow();
@@ -21,7 +21,7 @@
 			var tagsName = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sanday"];
 			// var table = '<col> <col> <col> <col> <col> <col> <col>';
 			// Heer I want to make the same thing that I have been doing in previous line
-			var table = window.app.Template.defaultTemplate;
+			var table = template.defaultTemplate;
 
 			// for count days in first line(with day name)
 			var dayFlag = 0;
@@ -31,7 +31,7 @@
 			var firstDateInTable = daysAgo(d, getDay(d));
 			for (var i = 0; i < getDay(d); i++) {
 				// table += '<td class="pre-post" id="' + firstDateInTable + '">' + tagsName[i] + ', <span>' + firstDateInTable++ + '</span></td>';
-				var templateAnotherMonth = window.app.Template.anotherMonth;
+				var templateAnotherMonth = template.anotherMonth;
 				var data = {
 					class : 'pre-post',
 					id : firstDateInTable,
