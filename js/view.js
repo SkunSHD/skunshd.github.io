@@ -19,16 +19,26 @@
 			var today = new Date();
 
 			var tagsName = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sanday"];
-			var table = '<col> <col> <col> <col> <col> <col> <col>';
+			// var table = '<col> <col> <col> <col> <col> <col> <col>';
+			// Heer I want to make the same thing that I have been doing in previous line
+			var table = window.app.Template.defaultTemplate;
 
 			// for count days in first line(with day name)
 			var dayFlag = 0;
 
 			// filling first line with previous month days
 			// -> 29 30 31 <- | 1  2  3  4
-			var fistDateInTable = daysAgo(d, getDay(d));
+			var firstDateInTable = daysAgo(d, getDay(d));
 			for (var i = 0; i < getDay(d); i++) {
-				table += '<td class="pre-post" id="' + fistDateInTable + '">' + tagsName[i] + ', <span>' + fistDateInTable++ + '</span></td>';
+				// table += '<td class="pre-post" id="' + firstDateInTable + '">' + tagsName[i] + ', <span>' + firstDateInTable++ + '</span></td>';
+				var templateAnotherMonth = window.app.Template.anotherMonth;
+				var data = {
+					class : 'pre-post',
+					id : firstDateInTable,
+					tagName : firstDateinTable
+				}
+				var compiled = _.template(templateAnotherMonth, data);
+				table += compiled;
 				dayFlag++;
 			}
 
@@ -53,7 +63,7 @@
 						dayFlag++;
 					}
 
-					table += '<td id="' + window.app.Methods.formatDate(d) + '" class="' + heighlichtClass + '">' + heuteTag + d.getDate() + '<div id="event-container">' +
+					table += '<td class="' + heighlichtClass + '" id="' + window.app.Methods.formatDate(d) + '">' + heuteTag + d.getDate() + '<div id="event-container">' +
 						'<h5>' + event + '</h5>' + '<p class="event-names">' + names + '</p>' + '<p class="event-description">' + description + '</p>' + '</div>' + '</td>';
 
 					// days without notes
