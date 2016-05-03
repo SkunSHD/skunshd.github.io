@@ -12,10 +12,29 @@
 		=	'<col> <col> <col> <col> <col> <col> <col>';
 		
 		this.anotherMonth
-		=	'<td class="pre-post" id=" <%= fistDateInTable %> ">'
-		+		'<% if (tagsName) { %> <%= tagsName %> <% } %>'
-		+		'<span> <%= fistDateInTabl %> </span>'
+		=	'<td class="pre-post" id="<%= id %>">'
+		+		'<% if (tagName) { %> <%= tagName %>, <% }; %>'
+		+		'<span><%= day %></span>'
 		+	'</td>';
+		
+		
+		this.thisMonth
+		=	'<td class="<%= className %>" id="<%= id %>" >'
+		+		'<%= day %>'
+		+		'<div id="event-container">'
+		+			'<h5><%= event %></h5>'
+		+			'<p class="event-names"><%= names %></p>'
+		+			'<p class="event-description"><%= description %></p>'
+		+		'</div>'
+		+	'</td>';
+		
+		this.justMonthTemplate
+		=	'<td id="<%= id %>" class="<%= className %>">'
+		+	'<%= day %>'
+		+	'</td>';
+
+		this.nextLine
+		=	'</tr><tr>';
 	}
 	
 	

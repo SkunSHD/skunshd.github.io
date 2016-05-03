@@ -11,6 +11,7 @@
 
         // this.calendar = new app.Calendar();
         // this.calendar.createCalendar();
+		
 		this.template = new app.Template();
 		
 		this.view = new app.View(this.template);

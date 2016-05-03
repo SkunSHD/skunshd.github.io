@@ -20,7 +20,6 @@
 
 			var tagsName = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sanday"];
 			// var table = '<col> <col> <col> <col> <col> <col> <col>';
-			// Heer I want to make the same thing that I have been doing in previous line
 			var table = template.defaultTemplate;
 
 			// for count days in first line(with day name)
@@ -33,15 +32,15 @@
 				// table += '<td class="pre-post" id="' + firstDateInTable + '">' + tagsName[i] + ', <span>' + firstDateInTable++ + '</span></td>';
 				var templateAnotherMonth = template.anotherMonth;
 				var data = {
-					class : 'pre-post',
 					id : firstDateInTable,
-					tagName : firstDateinTable
+					tagName : tagsName[i],
+					day : firstDateInTable++
 				}
-				var compiled = _.template(templateAnotherMonth, data);
-				table += compiled;
+				var compiled = _.template(templateAnotherMonth);
+				table += compiled(data);
 				dayFlag++;
 			}
-
+			
 			// filling main table
 			while (d.getMonth() == monthOutLS) {
 				// days with notes
@@ -63,23 +62,45 @@
 						dayFlag++;
 					}
 
-					table += '<td class="' + heighlichtClass + '" id="' + window.app.Methods.formatDate(d) + '">' + heuteTag + d.getDate() + '<div id="event-container">' +
-						'<h5>' + event + '</h5>' + '<p class="event-names">' + names + '</p>' + '<p class="event-description">' + description + '</p>' + '</div>' + '</td>';
-
+					// table += '<td class="' + heighlichtClass + '" id="' + window.app.Methods.formatDate(d) + '">' + heuteTag + d.getDate() + '<div id="event-container">' +
+						// '<h5>' + event + '</h5>' + '<p class="event-names">' + names + '</p>' + '<p class="event-description">' + description + '</p>' + '</div>' + '</td>';
+					var monthWithEventTemplate = template.thisMonth;
+					var compile = _.template(thisMonthTemplate);
+			
+					var data = {
+						className : heighlichtClass,
+						id : window.app.Methods.formatDate(d),
+						day : heuteTag + d.getDate(),
+						event : event,
+						names : names,
+						description : description
+					}
+					
+					table += compile(data);
 					// days without notes
 				} else {
-					window.app.Methods.formatDate(d) == window.app.Methods.formatDate(today) ? heighlichtClass = 'class ="today"' : heighlichtClass = '';
+					// window.app.Methods.formatDate(d) == window.app.Methods.formatDate(today) ? heighlichtClass = 'class ="today"' : heighlichtClass = '';
+					window.app.Methods.formatDate(d) == window.app.Methods.formatDate(today) ? heighlichtClass = 'today' : heighlichtClass = '';
 					// first week check and add week names
 					heuteTag = '';
 					if (dayFlag < 7) {
 						heuteTag = tagsName[getDay(d)] + ', ';
 						dayFlag++;
 					}
-					table += '<td id="' + window.app.Methods.formatDate(d) + '" ' + heighlichtClass + '>' + heuteTag + d.getDate() + '</td>';
+					// table += '<td id="' + window.app.Methods.formatDate(d) + '" ' + heighlichtClass + '>' + heuteTag + d.getDate() + '</td>';
+					var justMonthTemplate = template.justMonthTemplate;
+					var compile = _.template(justMonthTemplate);
+					var data = {
+						className : heighlichtClass,
+						id : window.app.Methods.formatDate(d),
+						day : heuteTag + d.getDate()
+					}
+					table += compile(data);
 				}
 
 				if (getDay(d) % 7 == 6) { // Sonntag is last day - go in next line
-					table += '</tr><tr>';
+					// table += '</tr><tr>';
+					table += template.nextLine;
 				}
 				d.setDate(d.getDate() + 1);
 			}
@@ -87,7 +108,9 @@
 			// add next week days
 			if (getDay(d) != 0) {
 				for (var i = getDay(d), k = 1; i < 7; i++, k++) {
-					table += '<td class="pre-post" id="' + k + '"><span>' + k + '</span></td>';
+					// table += '<td class="pre-post" id="' + k + '"><span>' + k + '</span></td>';
+					var compiled = _.template(template.anotherMonth);
+					table += compiled( {id: k, tagName: '', day: k});
 				}
 			}
 			// get day name: 0(Montag) bis 6(Sonntag)
