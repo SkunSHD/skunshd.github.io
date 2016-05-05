@@ -1,0 +1,1 @@
+(function(window) {	'use strict'		function Model(storage) {		}		Model.prototype.saveEvent = function (key, value) {		storage.setData(key, value);	}		Model.prototype.getEvent = function (key) {		return storage.getData(key);	}				window.app = window.app || {};	window.app.Model = Model;	})(window);
