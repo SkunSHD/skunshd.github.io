@@ -1,6 +1,6 @@
 (function (window) {
 	'use strict';
-	
+
 	function View(template) {
 		
 		this.createCalendar = function () {
@@ -27,8 +27,8 @@
 
 			// filling first line with previous month days
 			// -> 29 30 31 <- | 1  2  3  4
-			var firstDateInTable = daysAgo(d, getDay(d));
-			for (var i = 0; i < getDay(d); i++) {
+			var firstDateInTable = daysAgo(d, getDayName(d));
+			for (var i = 0; i < getDayName(d); i++) {
 				// table += '<td class="pre-post" id="' + firstDateInTable + '">' + tagsName[i] + ', <span>' + firstDateInTable++ + '</span></td>';
 				var templateAnotherMonth = template.anotherMonth;
 				var data = {
@@ -58,7 +58,7 @@
 					window.app.Methods.formatDate(d) == window.app.Methods.formatDate(today) ? heighlichtClass = 'today' : heighlichtClass = 'td-with-note';
 					// first week check and add week names
 					if (dayFlag < 7) {
-						heuteTag = tagsName[getDay(d)] + ', ';
+						heuteTag = tagsName[getDayName(d)] + ', ';
 						dayFlag++;
 					}
 
@@ -84,7 +84,7 @@
 					// first week check and add week names
 					heuteTag = '';
 					if (dayFlag < 7) {
-						heuteTag = tagsName[getDay(d)] + ', ';
+						heuteTag = tagsName[getDayName(d)] + ', ';
 						dayFlag++;
 					}
 					// table += '<td id="' + window.app.Methods.formatDate(d) + '" ' + heighlichtClass + '>' + heuteTag + d.getDate() + '</td>';
@@ -98,7 +98,7 @@
 					table += compile(data);
 				}
 
-				if (getDay(d) % 7 == 6) { // Sonntag is last day - go in next line
+				if (getDayName(d) % 7 == 6) { // Sonntag is last day - go in next line
 					// table += '</tr><tr>';
 					table += template.nextLine;
 				}
@@ -106,15 +106,15 @@
 			}
 
 			// add next week days
-			if (getDay(d) != 0) {
-				for (var i = getDay(d), k = 1; i < 7; i++, k++) {
+			if (getDayName(d) != 0) {
+				for (var i = getDayName(d), k = 1; i < 7; i++, k++) {
 					// table += '<td class="pre-post" id="' + k + '"><span>' + k + '</span></td>';
 					var compiled = _.template(template.anotherMonth);
 					table += compiled( {id: k, tagName: '', day: k});
 				}
 			}
 			// get day name: 0(Montag) bis 6(Sonntag)
-			function getDay(date) {
+			function getDayName(date) {
 				if (date > 0) {
 					var day = date.getDay();
 					if (day == 0) day = 7;
@@ -123,7 +123,9 @@
 			}
 
 			// close table
-			table += '</tr>';
+			// table += '</tr>';
+			table += template.endTable;
+			
 			var tableElem = document.createElement('table');
 			tableElem.innerHTML = table;
 

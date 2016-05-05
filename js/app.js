@@ -8,9 +8,6 @@
 	
         this.showDateMethods = app.ShowDateMethods;
         this.showDateMethods.showDate();
-
-        // this.calendar = new app.Calendar();
-        // this.calendar.createCalendar();
 		
 		this.template = new app.Template();
 		

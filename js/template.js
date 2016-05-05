@@ -29,12 +29,15 @@
 		+	'</td>';
 		
 		this.justMonthTemplate
-		=	'<td id="<%= id %>" class="<%= className %>">'
+		=	'<td id="<%= id %>" <% if (className) { %> class="<%= className %>" <% }; %> >'
 		+	'<%= day %>'
 		+	'</td>';
 
 		this.nextLine
 		=	'</tr><tr>';
+		
+		this.endTable
+		=	'</tr>';
 	}
 	
 	
