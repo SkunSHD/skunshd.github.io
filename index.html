@@ -20,24 +20,84 @@
 
 		<div id="content">
 			<time id="day-select">
-
 				<a href="#" id="button-previous" class="button" onClick="app.ShowDateMethods.listener()()" >Previous month</a>
+				<p class="date-indicator"></p>
 				<a href="#" id="button-next"  class="button" onClick="app.ShowDateMethods.listener()()" >Next month</a>
 				<div id="today-button" onClick="app.ShowDateMethods.showToday()">Today</div>
 				<!-- Heute ist -->
 			</time> <!-- day-select-->
 			
-			<div id="calendar"></div>
+			<div id="calendar">
+				<table>
+					<col> <col> <col> <col> <col> <col> <col>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</table>
+			</div>
 			
 		</div><!--content-->
 	</div><!--page-->
+	<script src="vendor/lib/underscore-min.js"></script>
 	<script src="js/ShowAndNavigate.js"></script>
 	<script src="js/MainFeateres.js"></script>
 	<script src="js/Search.js"></script>
 	<script src="js/view.js"></script>
-	<script src="js/store.js"></script>
+	<script src="js/utils/store.js"></script>
 	<script src="js/template.js"></script>
-	<script src="js/underscore-min.js"></script>
+	<script src="js/controller.js"></script>
+	<script src="js/model/model.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>

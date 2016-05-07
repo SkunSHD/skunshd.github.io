@@ -7,8 +7,8 @@
 
     // Monat und Jar aus localStorage
     ShowDateMethods.getLocalDateObj = function() {
-        var monthString = window.app.storage.getData('month');
-        var yearString = window.app.storage.getData('year');
+        var monthString = localStorage.getItem('month');
+        var yearString = localStorage.getItem('year');
         return new Date(yearString, monthString);
     }
 
@@ -55,13 +55,16 @@
 
             var dateString = date.toLocaleString('en', { year: 'numeric', month: 'long' });
 
-            var p = document.createElement('p');
-            p.className = 'date-indicator';
-            p.innerHTML = dateString;
+            // var p = document.createElement('p');
+            // p.className = 'date-indicator';
+            // p.innerHTML = dateString;
 
-            parent.insertBefore(p, parent.children[1]);
+            // parent.insertBefore(p, parent.children[1]);
+			
+			var parent = document.querySelector('date-indicator');
+			parent.appendChild(dateString);
         } else {
-
+		
             var selectedDate = ShowDateMethods.getLocalDateObj();
             var selectedDateString = selectedDate.toLocaleString('en', { year: 'numeric', month: 'long'});
 
@@ -186,7 +189,7 @@
 
         function goInMonthYear(event) {
             if(document.querySelector('.calendar-list-month')) {
-                window.app.storage.setData('month', this.getAttribute('index'));
+                localeStorage.setItem('month', this.getAttribute('index'));
                 new window.app.Calendar().createCalendar();
             }
             if(document.querySelector('.calendar-list-year')) {

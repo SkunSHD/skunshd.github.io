@@ -65,7 +65,7 @@
 					// table += '<td class="' + heighlichtClass + '" id="' + window.app.Methods.formatDate(d) + '">' + heuteTag + d.getDate() + '<div id="event-container">' +
 						// '<h5>' + event + '</h5>' + '<p class="event-names">' + names + '</p>' + '<p class="event-description">' + description + '</p>' + '</div>' + '</td>';
 					var monthWithEventTemplate = template.thisMonth;
-					var compile = _.template(thisMonthTemplate);
+					var compile = _.template(monthWithEventTemplate);
 			
 					var data = {
 						className : heighlichtClass,
