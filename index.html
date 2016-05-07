@@ -8,7 +8,7 @@
 	<div id="page">
 		<header>
 			<nav>
-				<button name="add" onClick="new app.WindowFastNote().addPopupWindow()">Fast Note</button>
+				<button class="add_btn" name="add" >Fast Note</button>
 				<button name="renew" onClick="new app.Calendar().createCalendar()">Refresh</button>
 				<!-- Poisk -->
 				<div class="search-box">
@@ -89,7 +89,7 @@
 			
 		</div><!--content-->
 	</div><!--page-->
-	<div class="add-event-window">
+	<div class="add-event-window" hidden="hidden">
 		<form class="popupform" name="popup">
 			<input class="close-button" type="button" value="x"/>
 			<input class="input-lines" name="event" placeholder="Event"/>
@@ -103,7 +103,8 @@
 	<script src="vendor/lib/underscore-min.js"></script>
 	<script src="js/ShowAndNavigate.js"></script>
 	<script src="js/MainFeateres.js"></script>
-	<script src="js/Search.js"></script>
+	<script src="js/events.js"></script>
+	<script src="js/calendar.js"></script>
 	<script src="js/view.js"></script>
 	<script src="js/utils/store.js"></script>
 	<script src="js/template.js"></script>

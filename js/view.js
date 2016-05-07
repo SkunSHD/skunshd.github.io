@@ -6,7 +6,7 @@
 		this.createCalendar = function () {
 			// Methods.closePopupWindow();
 
-			var monthOutLS = window.app.storage.getData('month');
+			var monthOutLS = localeStorage.getItem('month');
 			
 			var calendarElem = document.getElementById('calendar');
 

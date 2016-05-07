@@ -18,8 +18,9 @@
 		
 		this.controller = new app.Controller(this.model, this.view);
 		
-        this.search = new app.Search();
-        this.search.start();
+        // this.search = new app.Search();
+        // this.search.start();
+		window.app.calendar.init();
     }
 
     var myApplication = new MyApp();
