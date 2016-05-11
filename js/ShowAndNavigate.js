@@ -54,12 +54,6 @@
             window.app.storage.setData('year', date.getFullYear());
 
             var dateString = date.toLocaleString('en', { year: 'numeric', month: 'long' });
-
-            // var p = document.createElement('p');
-            // p.className = 'date-indicator';
-            // p.innerHTML = dateString;
-
-            // parent.insertBefore(p, parent.children[1]);
 			
 			var parent = document.querySelector('date-indicator');
 			parent.appendChild(dateString);
