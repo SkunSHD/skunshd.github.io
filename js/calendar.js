@@ -37,9 +37,9 @@
 			var subj = document.querySelector('.date-indicator');
 			if(subj) {
 				var date = new Date();
-				localStorage.setItem('month', date.getMonth());
+				//window.app.Store.setData('month', date.getMonth()); <- это не пашет, пишет: window.app.Model.save is not a function
+				window.app.Store.setData('month', date.getMonth());
 				localStorage.setItem('year', date.getFullYear());
-				alert(subj);
 				subj.innerHTML =  date.toLocaleString('en', {year: 'numeric', month: 'long'});
 			}
 		}
