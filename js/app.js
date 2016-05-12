@@ -5,9 +5,6 @@
     function MyApp() {}
 
     MyApp.prototype.init = function() {
-	
-        this.showDateMethods = app.ShowDateMethods;
-        this.showDateMethods.showDate();
 		
 		this.storage = new app.Store();
 		this.model = new app.Model(this.storage);
@@ -17,9 +14,7 @@
 		// this.view.createCalendar();
 		
 		this.controller = new app.Controller(this.model, this.view);
-		
-        // this.search = new app.Search();
-        // this.search.start();
+
 		window.app.calendar.init();
     }
 
