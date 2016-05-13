@@ -2,23 +2,20 @@
 	'use strict'
 	
 	var events = {
+		list: {},
 		get: function(id) {
-			var result = window.app.Model.get(id);
-			result = result.split('/');
-			return {
-				event: result[0],
-				date: result[1],
-				names: result[2],
-				description: result[3]
-			};
+			return list.id;
 		},
-		add: function(id, data) {
-			window.app.Model.set(id, data.event + '/' + data.date + '/' + data.names + '/' + data.description);
+		add: function(eventObj) {
+			var id = new Date.getTime();
+			var obj = eventObj.event + '/' + eventObj.date + '/' + eventObj.names + '/' + eventObj.description;
+			localStorage.setItem(id, obj);
+			list.id = obj;
 		},
 		remove: function(id) {
-			window.app.Model.remove(id);
+			localStorage.removeItem(id);
 		}
 	};
-	
-	window.app.events = event;
+	window.app = window.app || {};
+	window.app.events = events;
 })(window);
