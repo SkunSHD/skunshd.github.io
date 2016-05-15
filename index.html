@@ -1,90 +1,32 @@
 <!DOCTYPE html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
-	<title>CallendarJS</title>
+	<title>CalendarJS</title>
 	<link href="css/style.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
 	<div id="page">
 		<header>
 			<nav>
-				<button class="add_btn" name="add" >Fast Note</button>
-				<button name="renew" onClick="new app.Calendar().createCalendar()">Refresh</button>
-				<!-- Poisk -->
+				<button id="add-event" class="add_btn" name="add" >Fast Note</button>
+				<button id="refresh" name="renew">Refresh</button>
+				<!-- Search -->
 				<div class="search-box">
 					<div class="search-img"></div>
-					<input type="search" name="search-area" class="find" placeholder="Event, date or participant"/>
+					<input id="search" type="search" name="search-area" class="find" placeholder="Event, date or participant"/>
 				</div>
 			</nav><!--nav-->
 		</header>
 
 		<div id="content">
 			<time id="day-select">
-				<a href="#" id="button-previous" class="button" onClick="app.ShowDateMethods.listener()()" >Previous month</a>
+				<a href="#" id="button-previous" class="button">Previous month</a>
 				<p class="date-indicator"></p>
-				<a href="#" id="button-next"  class="button" onClick="app.ShowDateMethods.listener()()" >Next month</a>
-				<div id="today-button" onClick="app.ShowDateMethods.showToday()">Today</div>
-				<!-- Heute ist -->
+				<a href="#" id="button-next"  class="button">Next month</a>
+				<div id="today-button">Today</div>
 			</time> <!-- day-select-->
 			
-			<div id="calendar">
-				<table>
-					<col> <col> <col> <col> <col> <col> <col>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-				</table>
+			<div id="container">
 			</div>
 			
 		</div><!--content-->
@@ -101,14 +43,12 @@
 		</form>
 	</div>
 	<script src="vendor/lib/underscore-min.js"></script>
-	<script src="js/event.js"></script>
-	<script src="js/events.js"></script>
-	<script src="js/view.js"></script>
+    <script src="js/header.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/event.model.js"></script>
+	<script src="js/event.collection.js"></script>
 	<script src="js/template.js"></script>
-	<script src="js/controller.js"></script>
-	<script src="js/model/model.js"></script>
 	<script src="js/utils/store.js"></script>
-	<script src="js/calendar.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
