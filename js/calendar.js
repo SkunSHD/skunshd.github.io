@@ -6,6 +6,7 @@
 		events: window.app.events,
 		init: function() {
 			this.showCurrentDate();
+			alert(window.app.Store.getlocalDateObj);
 			//после загрузки DOM слушаем события
 			var el = document.querySelector('.add_btn'); 
 			el.addEventListener('click', this.showDialog, false);

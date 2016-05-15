@@ -48,6 +48,7 @@
     ShowDateMethods.showDate = function() {
         var parent = document.getElementById('day-select');
         // first time adding date or not
+		// this 'if' part(true) moved in calendar.js
         if(parent.children[1].className != 'date-indicator') {
             var date = new Date();
             window.app.storage.setData('month', date.getMonth());
