@@ -12,7 +12,7 @@
             var container = document.getElementById('container');
             container.innerHTML = _.template(template)();
 			
-			this.checkEvents();
+			alert(window.app.Model.save);
         },
 		
 		assemble: function(dateObj) {
@@ -22,7 +22,6 @@
 		checkEvents: function(dateObj) {
 			// once appeals by a key month in the lS and pulls all the events of the month
 			// returns an array
-			alert(app.Model.save);
 		},
 		
 		monthCapacity: function(dateObj) {		

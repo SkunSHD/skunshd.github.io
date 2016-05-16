@@ -12,6 +12,7 @@
      */
     var calendar = {
         init: function() {
+
             //all templates
             this.templates = app.templates;
 
