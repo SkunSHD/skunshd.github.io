@@ -4,7 +4,7 @@
 	/**
 	* template - {object literal}
     * @description
-    *   Contains html templates
+    *  Contains html templates
 	*/
 	
 	var templates = {
@@ -22,14 +22,14 @@
             +   '</tr>'
             + '</table>',
 
-		anotherMonth: ''
+		anotherMonthCell: ''
             + '<td class="pre-post" id="<%= id %>">'
             +		'<% if (tagName) { %> <%= tagName %>, <% }; %>'
             +		'<span><%= day %></span>'
             +	'</td>',
 		
 		
-		thisMonth: ''
+		thisMonthCell: ''
             + '<td class="<%= className %>" id="<%= id %>" >'
             +		'<%= day %>'
             +		'<div id="event-container">'
@@ -39,7 +39,7 @@
             +		'</div>'
             +	'</td>',
 		
-		justMonthTemplate: ''
+		justMonthCell: ''
             + '<td id="<%= id %>" <% if (className) { %> class="<%= className %>" <% }; %> >'
             +	'<%= day %>'
             +	'</td>'

@@ -12,7 +12,7 @@
     var header = {
         init: function() {
             var add = document.getElementById('add-event');
-           add.addEventListener('click', this.add, false);
+            add.addEventListener('click', this.add, false);
 
             var refresh = document.getElementById('refresh');
             refresh.addEventListener('click', this.refresh, false);
@@ -23,7 +23,7 @@
 
         //todo: create a new view for the dialog. E.g. add_event.js.
         //this view should have its own template and should use event.js (model).
-        //You will use this view also in main.js to sho a dialog when user clicks on a cell. Assign this view to app.addEvent
+        //You will use this view also in main.js to show a dialog when user clicks on a cell. Assign this view to app.addEvent
         add: function() {
             alert('add event');
         },
