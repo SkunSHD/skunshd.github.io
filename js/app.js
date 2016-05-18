@@ -20,16 +20,20 @@
             this.header = app.header;
             //init header event listeners
             this.header.init();
-
+			
             //storage object
             this.storage = app.storage;
+			
             //event model
-            this.event = new app.Model(this.storage);
+            this.eventModel = new app.Model(this.storage);
+
+			// collection
+			this.collection = app.collection;
 			
 			//header
             this.main = app.main;
             //init header event listeners
-            this.main.init(this.templates.main);
+            this.main.init(this.templates.main, this.eventModel);
         }
     };
 
