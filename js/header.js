@@ -19,13 +19,16 @@
 
             var search = document.getElementById('search');
             search.addEventListener('input', this.search, false);
+			
         },
 
         //todo: create a new view for the dialog. E.g. add_event.js.
         //this view should have its own template and should use event.js (model).
         //You will use this view also in main.js to show a dialog when user clicks on a cell. Assign this view to app.addEvent
         add: function() {
-            alert('add event');
+            // alert('add event');
+			var popup = document.querySelector('.add-event-window');
+			popup.hasAttribute('hidden') ? popup.removeAttribute('hidden') : popup.setAttribute('hidden', 'hidden');
         },
 
         refresh: function() {
