@@ -9,6 +9,7 @@
             //todo 3: listen to a click on a cell and show addEvent dialog (same as in header)
             //todo 4: listen to arrows to toggle between months
             //todo 5: listen to 'today' button
+			
             var container = document.getElementById('container');
             container.innerHTML = _.template(template)();
 			this.assemble(model);
@@ -16,13 +17,27 @@
 		
 		assemble: function(model) {
 			var lsEvents = app.collection.checkEvents(model);
-		},
-		
-		monthCapacity: function(dateObj) {
-			var dateObj = dateObj || new Date();
-			var result = new Date(dateObj.getFullYear(), dateObj.getMonth() + 1, 0);
-			return result.getDate();
+			
+			
+			// actions below are for the ls testing
+			var submit = document.querySelector('.add-button');
+			submit.addEventListener('click', formAction, false);
+			
+			function formAction() {
+				var form = document.forms.popup;
+				
+				if(!form) return;
+				var eventObj = {
+					event: form.event.value,
+					date: new Date(),
+					names: form.names.value,
+					description: form.description.value
+				};
+				
+				model.save(eventObj);
+			}
 		}
+		
     };
 
     window.app = window.app || {};
