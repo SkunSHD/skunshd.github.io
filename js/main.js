@@ -12,24 +12,38 @@
 			
 			var assembled = this.assemble(model, template);
             var container = document.getElementById('container');
-            // container.innerHTML = _.template(template)();
-			container.innerHTML = assembled;
+			container.appendChild(assembled);
         },
 		
 		assemble: function(model, template) {
+			// этот метод ошибку выдаёт
 			var allMonthsEventsList = app.collection.checkEvents(model);
-			var thisMonthEventsList = app.collection.getThisMonthEvents(allMonthsEventsList);
+			// var thisMonthEventsList = app.collection.getThisMonthEvents(allMonthsEventsList);
+			var arr = new Array(31);
 			
-			var docFrag = document.createDocumentFragment();
+			var docFrag = '';
+			for(var i=0; i<arr.length; i++) {
+				// Чтобы вставлять дни с событем и без в template, нужно написать отдельный метод для сборки объектов под шаблон.
+				// Метод должен поставить:
+				// число месяца
+				// название дня недели, НО только для первой недели месяца
+				// заполненные атрибуты события (event, date, names и/или desctiption)
+				
+				docFrag += _.template(template)({date: i+1});
+			}
+			
 			var ol = document.createElement('ol');
-			thisMonthEventsList.forEach(function(e){
-				var li = document.createElement("li");
-				li.textContent = e;
-				docFrag.appendChild(li);
-			});
+			ol.innerHTML = docFrag;
 			
-			ol.appendChild(docFrag);
 			return ol;
+			
+			// thisMonthEventsList.forEach(function(e) {
+				// var li = document.createElement("li");
+				// li.textContent = e;
+				// li.className = 'calendar-left-side calendar-list-item calendar-list-';
+				// docFrag.appendChild(li);
+			// });
+			
 		}
 		
     };
