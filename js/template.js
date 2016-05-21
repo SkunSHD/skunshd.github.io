@@ -1,47 +1,52 @@
 (function (window) {
-	'use strict'
+	'use strict';
 	
 	/**
-	* Sets up defaults for all the Template methods such as a default template
-	*
-	* @constructor
+	* template - {object literal}
+    * @description
+    *  Contains html templates
 	*/
 	
-	function Template() {
-		this.defaultTemplate
-		=	'<col> <col> <col> <col> <col> <col> <col>';
-		
-		this.anotherMonth
-		=	'<td class="pre-post" id="<%= id %>">'
-		+		'<% if (tagName) { %> <%= tagName %>, <% }; %>'
-		+		'<span><%= day %></span>'
-		+	'</td>';
-		
-		
-		this.thisMonth
-		=	'<td class="<%= className %>" id="<%= id %>" >'
-		+		'<%= day %>'
-		+		'<div id="event-container">'
-		+			'<h5><%= event %></h5>'
-		+			'<p class="event-names"><%= names %></p>'
-		+			'<p class="event-description"><%= description %></p>'
-		+		'</div>'
-		+	'</td>';
-		
-		this.justMonthTemplate
-		=	'<td id="<%= id %>" <% if (className) { %> class="<%= className %>" <% }; %> >'
-		+	'<%= day %>'
-		+	'</td>';
+	var templates = {
+		main: ''
+            + '<table>'
+            +   '<col> <col> <col> <col> <col> <col> <col>'
+            +   '<tr>'
+            +       '<td></td>'
+            +       '<td></td>'
+            +       '<td></td>'
+            +       '<td></td>'
+            +       '<td></td>'
+            +       '<td></td>'
+            +       '<td></td>'
+            +   '</tr>'
+            + '</table>',
 
-		this.nextLine
-		=	'</tr><tr>';
+		anotherMonthCell: ''
+            + '<td class="pre-post" id="<%= id %>">'
+            +		'<% if (tagName) { %> <%= tagName %>, <% }; %>'
+            +		'<span><%= day %></span>'
+            +	'</td>',
 		
-		this.endTable
-		=	'</tr>';
+		
+		thisMonthCell: ''
+            + '<td class="<%= className %>" id="<%= id %>" >'
+            +		'<%= day %>'
+            +		'<div id="event-container">'
+            +			'<h5><%= event %></h5>'
+            +			'<p class="event-names"><%= names %></p>'
+            +			'<p class="event-description"><%= description %></p>'
+            +		'</div>'
+            +	'</td>',
+		
+		justMonthCell: ''
+            + '<td id="<%= id %>" <% if (className) { %> class="<%= className %>" <% }; %> >'
+            +	'<%= day %>'
+            +	'</td>'
 	}
 	
 	
 	window.app = window.app || {};
-	window.app.Template = Template;
+	window.app.templates = templates;
 	
 })(window);

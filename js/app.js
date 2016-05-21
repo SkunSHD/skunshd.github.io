@@ -2,24 +2,41 @@
 (function() {
     'use strict';
 
-    function MyApp() {}
+    /**
+     * calendar - app
+     *
+     * @description
+     *  Single instance of calendar application. It is an object literal because we need only one exemplar of it.
+     *
+     * @type {{init: init}}
+     */
+    var calendar = {
+        init: function() {
 
-    MyApp.prototype.init = function() {
-	
-        this.showDateMethods = app.ShowDateMethods;
-        this.showDateMethods.showDate();
-		
-		this.template = new app.Template();
-		
-		this.view = new app.View(this.template);
-		this.view.createCalendar();
+            //all templates
+            this.templates = app.templates;
 
-        this.search = new app.Search();
-        this.search.start();
-    }
+            //header
+            this.header = app.header;
+            //init header event listeners
+            this.header.init();
+			
+            //storage object
+            this.storage = app.storage;
+			
+            //event model
+            this.eventModel = new app.Model(this.storage);
 
-    var myApplication = new MyApp();
+			// collection
+			this.collection = app.collection;
+			
+			//header
+            this.main = app.main;
+            //init header event listeners
+            this.main.init(this.templates.main, this.eventModel);
+        }
+    };
 
-    window.addEventListener('load', myApplication.init(), false);
+    window.addEventListener('load', calendar.init(), false);
 
 })();

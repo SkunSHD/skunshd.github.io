@@ -112,7 +112,8 @@
             //pointer element
             var pointer = Methods.createAndAddInput('div', 'pointer', '', document.body);
 
-            //create and add close element
+            // create and add close element
+			// Methods.createAndAddButton(className, value, place, func)
             Methods.createAndAddButton('close-button', 'x', addWindow, function () {
                 Methods.closePopupWindow();
             });
