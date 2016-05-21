@@ -2,14 +2,18 @@
 	'use strict'
 	
 	var collection = {
-		list: {},
+		list: [],
 		
-		get: function(id) {
-
+		getThisMonthEvents: function(array) {
+			var ms = new Date().getTime();
+			var key = this.makeMonthId(ms);
+			
+			return array[key];
 		},
 		
 		checkEvents: function(model) {
-			model.getAll();
+			this.list = model.getAll();
+			return this.list;
 		},
 		
 		add: function() {
@@ -18,6 +22,14 @@
 		
 		remove: function(id) {
 
+		},
+		
+		makeMonthId: function (eventObj) {
+			var lsId = new Date(eventObj.date);
+			lsId.setDate(1);
+			lsId.setHours(0, 0, 0, 0);
+			lsId = lsId.getTime();
+			return lsId;
 		}
 	};
 	

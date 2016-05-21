@@ -10,32 +10,26 @@
             //todo 4: listen to arrows to toggle between months
             //todo 5: listen to 'today' button
 			
+			var assembled = this.assemble(model, template);
             var container = document.getElementById('container');
-            container.innerHTML = _.template(template)();
-			this.assemble(model);
+            // container.innerHTML = _.template(template)();
+			container.innerHTML = assembled;
         },
 		
-		assemble: function(model) {
-			var lsEvents = app.collection.checkEvents(model);
+		assemble: function(model, template) {
+			var allMonthsEventsList = app.collection.checkEvents(model);
+			var thisMonthEventsList = app.collection.getThisMonthEvents(allMonthsEventsList);
 			
+			var docFrag = document.createDocumentFragment();
+			var ol = document.createElement('ol');
+			thisMonthEventsList.forEach(function(e){
+				var li = document.createElement("li");
+				li.textContent = e;
+				docFrag.appendChild(li);
+			});
 			
-			// actions below are for the ls testing
-			var submit = document.querySelector('.add-button');
-			submit.addEventListener('click', formAction, false);
-			
-			function formAction() {
-				var form = document.forms.popup;
-				
-				if(!form) return;
-				var eventObj = {
-					event: form.event.value,
-					date: new Date(),
-					names: form.names.value,
-					description: form.description.value
-				};
-				
-				model.save(eventObj);
-			}
+			ol.appendChild(docFrag);
+			return ol;
 		}
 		
     };

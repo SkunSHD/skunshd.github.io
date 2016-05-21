@@ -8,6 +8,10 @@
 	*/
 	
 	var templates = {
+		// main: ''
+			// + '<li class="calendar-left-side calendar-list-item calendar-list-item">'
+			// + '</li>',
+		
 		main: ''
             + '<table>'
             +   '<col> <col> <col> <col> <col> <col> <col>'
