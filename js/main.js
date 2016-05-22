@@ -15,9 +15,10 @@
 			container.appendChild(assembled);
         },
 		
+		// модель пока что здесь не нужна
 		assemble: function(model, template) {
 			// этот метод ошибку выдаёт
-			var allMonthsEventsList = app.collection.checkEvents(model);
+			var allMonthsEventsList = app.collection.checkEvents();
 			// var thisMonthEventsList = app.collection.getThisMonthEvents(allMonthsEventsList);
 			var arr = new Array(31);
 			
