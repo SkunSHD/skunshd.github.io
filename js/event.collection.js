@@ -4,16 +4,22 @@
 	var collection = {
 		list: [],
 		
+		checkEvents: function() {
+			this.list = this.getAllEvents();
+			return this.list;
+		},
+	
 		getThisMonthEvents: function(array) {
 			var ms = new Date().getTime();
 			var key = this.makeMonthId(ms);
 			
-			return array[key];
-		},
-		
-		checkEvents: function() {
-			this.list = this.getAllEvents();
-			return this.list;
+			array.forEach(function(item, i, array) {
+				if (item.key == ms) {
+					alert('matched');
+					return item.value;
+				}
+			});
+			return [];
 		},
 		
 		add: function() {
@@ -24,8 +30,8 @@
 
 		},
 		
-		makeMonthId: function (eventObj) {
-			var lsId = new Date(eventObj.date);
+		makeMonthId: function (ms) {
+			var lsId = new Date(ms);
 			lsId.setDate(1);
 			lsId.setHours(0, 0, 0, 0);
 			lsId = lsId.getTime();

@@ -2,7 +2,7 @@
     'use strict';
 
     var main = {
-        init: function(template, model) {
+        init: function(template) {
             //this is our main template.
             //todo 1: check if we have saved events
             //todo 2: calculate current month and show as many cells as we have days and pass there saved events if we have any
@@ -10,16 +10,16 @@
             //todo 4: listen to arrows to toggle between months
             //todo 5: listen to 'today' button
 			
-			var assembled = this.assemble(model, template);
+			var assembled = this.assemble(template);
             var container = document.getElementById('container');
 			container.appendChild(assembled);
         },
 		
 		// модель пока что здесь не нужна
-		assemble: function(model, template) {
-			// этот метод ошибку выдаёт
+		assemble: function(template) {
 			var allMonthsEventsList = app.collection.checkEvents();
-			// var thisMonthEventsList = app.collection.getThisMonthEvents(allMonthsEventsList);
+			var thisMonthEventsList = app.collection.getThisMonthEvents(allMonthsEventsList);
+			alert(thisMonthEventsList.length);
 			var arr = new Array(31);
 			
 			var docFrag = '';
