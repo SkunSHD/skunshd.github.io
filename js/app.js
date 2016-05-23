@@ -25,7 +25,7 @@
             this.storage = app.storage;
 			
             //event model
-            this.eventModel = new app.Model(this.storage);
+            this.eventModel = new app.Model( {storage: this.storage} );
 
 			// collection
 			this.collection = app.collection;

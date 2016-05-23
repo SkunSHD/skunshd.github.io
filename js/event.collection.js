@@ -2,23 +2,20 @@
 	'use strict'
 	
 	var collection = {
+		// list = [monthMS: [{event.model} , ...], ... ]
 		list: [],
 		
-		checkEvents: function() {
-			this.list = this.getAllEvents();
+		checkEvents: function(model) {
+			this.list = this.getAllEvents(model);
 			return this.list;
 		},
 	
 		getThisMonthEvents: function(array) {
 			var ms = new Date().getTime();
 			var key = this.makeMonthId(ms);
-			
-			array.forEach(function(item, i, array) {
-				if (item.key == ms) {
-					alert('matched');
-					return item.value;
-				}
-			});
+			for(var i=0; i<array.length; i++) {
+				if (array[i].key == key) return array[i].value;
+			}
 			return [];
 		},
 		
@@ -38,23 +35,34 @@
 			return lsId;
 		},
 		
-		getAllEvents: function () {
+		getAllEvents: function (model) {
 			var result = [];
+			//  lsArr = [ ms: [{event: '', date: ''}, ...], ms: [{},{}], ... ] 
 			var lsArr = app.storage.getAllData();
-			
 			for (var i = 0; i<lsArr.length; i++) {
-				var id = lsArr[i].key;
+				var monthMS = lsArr[i].key;
 				
-				if (!new Date(id)) continue;				
-				var strValue = lsArr[i].value;
-				if (strValue.indexOf('"') == -1) continue;
+				if (!new Date(monthMS)) continue;				
+				var strEventsArray = lsArr[i].value;
+				if (strEventsArray.indexOf('"') == -1) continue;
 
-				var objValue = JSON.parse(strValue, function(key, value) {
-					if (key == 'date') return new Date(value);
-					return value;
-				});
-				
-				result.push( {key: id, value: objValue} );
+				//  strEventsArray = [ {event: '', date: ''}, {}, {}]
+				var objEventsArray = JSON.parse(strEventsArray);
+
+				var modelArray = this.createModels(objEventsArray, model);
+				// alert(modelArray);	
+				// result = [monthMS: [{event.model} , ...], ... ]
+				result.push( {key: monthMS, value: modelArray} );
+			}
+			
+			return result;
+		},
+		
+		createModels: function (array, model) {
+			var result = [];
+			for(var i=0; i<array.length; i++) {
+				var eventObj = new model.constructor(array[i]);
+				result.push(eventObj);
 			}
 			
 			return result;
