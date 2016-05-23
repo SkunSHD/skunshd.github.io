@@ -11,6 +11,7 @@
 		},
 	
 		getThisMonthEvents: function(array) {
+			// alert(array.key);
 			var ms = new Date().getTime();
 			var key = this.makeMonthId(ms);
 			for(var i=0; i<array.length; i++) {
@@ -50,7 +51,7 @@
 				var objEventsArray = JSON.parse(strEventsArray);
 
 				var modelArray = this.createModels(objEventsArray, model);
-				// alert(modelArray);	
+
 				// result = [monthMS: [{event.model} , ...], ... ]
 				result.push( {key: monthMS, value: modelArray} );
 			}
@@ -61,10 +62,13 @@
 		createModels: function (array, model) {
 			var result = [];
 			for(var i=0; i<array.length; i++) {
-				var eventObj = new model.constructor(array[i]);
-				result.push(eventObj);
+				if (array[i]) {
+					var eventObj = new model.constructor(array[i]);
+					result.push(eventObj);					
+				} else {
+					result.push('');
+				}
 			}
-			
 			return result;
 		}
 	};

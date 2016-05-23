@@ -16,7 +16,10 @@
         },
 		
 		assemble: function(template, model) {
-			// todo: сохранить объект и посмотреть что словиться тем что я наваял
+			// todo 1: научить model.save() сохранять объекты model
+			// todo 2: написать метод для создания template объектов из model объектов
+			
+			// тестовое собыьтие
 			// model.save({ event: 'Title', date: new Date(), names: 'Cilka, Alex', description: 'opisanie sobitiya' });
 			
 			var allMonthsEventsList = app.collection.checkEvents(model);
@@ -28,9 +31,11 @@
 			
 			var docFrag = '';
 			for(var i=0; i<thisMonthEventsArray.length; i++) {
-				// название дня недели, НО только для первой недели месяца
-				// заполненные атрибуты события (event, date, names и/или desctiption)
+				// нужно сделать метод для сборки объектов, которые будут вставляться в шаблон
+				// метод должен: вставлять название дня недели, НО только для первой недели месяца
+				// заполнять атрибуты событий (event, date, names и/или desctiption)
 				
+				// if (thisMonthEventsArray[i]) assemble template object;
 				docFrag += _.template(template)({date: i+1});
 			}
 			
