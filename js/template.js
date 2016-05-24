@@ -10,7 +10,10 @@
 	var templates = {
 		main: ''
 			+ '<li class="calendar-left-side calendar-list-item">'
-			+	 '<%- date %>'
+			+	'<%- date %> <br> <br>'
+			+	'<% if (event) { %> <%= event %> <% }; %> <br>'
+			+	'<% if (names) { %> <%= names %> <% }; %>'
+			+	'<% if (description) { %> <%= description %> <% }; %> <br>'
 			+ '</li>',
 		
 		// main: ''
