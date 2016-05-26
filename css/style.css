@@ -55,7 +55,7 @@ input[type="search"] {
     background: transparent url("../img/sp-bg.png") no-repeat scroll 0 0;
     background-position: -87px 0px;
 }
-/*Date and date navigation*/
+/*Date navigation*/
 .date-indicator {
 	display: inline-block;
 	height: 20px;
@@ -130,6 +130,9 @@ td:hover {
 }
 col {
 	border: 1px solid #E6E6E6;
+}
+ol {
+	width: 1000px;
 }
 .pre-post span {
 	color: #DED9D9;

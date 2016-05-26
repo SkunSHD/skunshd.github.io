@@ -23,6 +23,7 @@
 			
             //storage object
             this.storage = app.storage;
+			this.storage.init();
 			
             //event model
             this.eventModel = new app.Model( {storage: this.storage} );
