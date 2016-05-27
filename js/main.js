@@ -126,6 +126,7 @@
 			
 			return counter;
 		}
+
     };
 
     window.app = window.app || {};
