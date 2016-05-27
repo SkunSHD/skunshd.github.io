@@ -32,7 +32,8 @@
         },
 
         refresh: function() {
-            alert('Refresh');
+            alert('Cleared');
+			localStorage.clear();
         },
 
         search: function(e) {

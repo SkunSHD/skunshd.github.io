@@ -5,32 +5,30 @@
 	<link href="css/style.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
-	<div id="page">
-		<header>
-			<nav>
-				<button id="add-event" class="add_btn" name="add" >Fast Note</button>
-				<button id="refresh" name="renew">Refresh</button>
-				<!-- Search -->
-				<div class="search-box">
-					<div class="search-img"></div>
-					<input id="search" type="search" name="search-area" class="find" placeholder="Event, date or participant"/>
-				</div>
-			</nav><!--nav-->
-		</header>
+	<header>
+		<nav>
+			<button id="add-event" class="add_btn" name="add" >Fast Note</button>
+			<button id="refresh" name="renew">Refresh</button>
+			<div class="search-box">
+				<div class="search-img"></div>
+				<input id="search" type="search" name="search-area" class="find" placeholder="Event, date or participant"/>
+			</div>
+		</nav>
+	</header>
 
-		<div id="content">
+	<div id="content">
+		<div class="calendar-div">
 			<time id="day-select">
 				<a href="#" id="button-previous" class="button">Previous month</a>
 				<p class="date-indicator"></p>
 				<a href="#" id="button-next"  class="button">Next month</a>
 				<div id="today-button">Today</div>
-			</time> <!-- day-select-->
+			</time>
 			
 			<div id="container">
 			</div>
-			
-		</div><!--content-->
-	</div><!--page-->
+		</div>
+	</div>
 	<div class="add-event-window" hidden="hidden">
 		<form class="popupform" name="popup">
 			<input class="close-button" type="button" value="x"/>
