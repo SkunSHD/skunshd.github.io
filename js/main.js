@@ -10,11 +10,39 @@
             //todo 4: listen to arrows to toggle between months
             //todo 5: listen to 'today' button
 			
+<<<<<<< HEAD
+=======
 			var assembled = this.assemble(template, model);
+>>>>>>> develop
             var container = document.getElementById('container');
 			container.appendChild(assembled);
         },
 		
+<<<<<<< HEAD
+		assemble: function(model) {
+			var lsEvents = app.collection.checkEvents(model);
+			
+			
+			// actions below are for the ls testing
+			var submit = document.querySelector('.add-button');
+			submit.addEventListener('click', formAction, false);
+			
+			function formAction() {
+				var form = document.forms.popup;
+				
+				if(!form) return;
+				var eventObj = {
+					event: form.event.value,
+					date: new Date(),
+					names: form.names.value,
+					description: form.description.value
+				};
+				
+				model.save(eventObj);
+			}
+		}
+		
+=======
 		assemble: function(template, model) {
 			// todo 1: научить model.save() сохранять объекты model
 			
@@ -127,6 +155,7 @@
 			return counter;
 		}
 
+>>>>>>> develop
     };
 
     window.app = window.app || {};
