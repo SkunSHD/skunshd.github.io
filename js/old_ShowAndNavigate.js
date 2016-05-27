@@ -120,7 +120,7 @@
                 // Methods.createAndSetTag = function(tag, className, container, text)
                 var date = new Date();
 
-                var currentLi = window.app.Methods.createAndSetTag('li', 'calendar-left-side calendar-list-item calendar-list-item', ol, '<span>' + getMonth() + '</span>', goInMonthYear );
+                var currentLi = window.app.Methods.createAndSetTag('li', 'calendar-left-side calendar-list-item', ol, '<span>' + getMonth() + '</span>', goInMonthYear );
                 currentLi.setAttribute('index', i);
                 ol.appendChild(currentLi);
             }

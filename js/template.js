@@ -9,18 +9,26 @@
 	
 	var templates = {
 		main: ''
-            + '<table>'
-            +   '<col> <col> <col> <col> <col> <col> <col>'
-            +   '<tr>'
-            +       '<td></td>'
-            +       '<td></td>'
-            +       '<td></td>'
-            +       '<td></td>'
-            +       '<td></td>'
-            +       '<td></td>'
-            +       '<td></td>'
-            +   '</tr>'
-            + '</table>',
+			+ '<li class="calendar-left-side calendar-list-item">'
+			+	'<%- date %> <br> <br>'
+			+	'<% if (event) { %> <%= event %> <% }; %> <br>'
+			+	'<% if (names) { %> <%= names %> <% }; %>'
+			+	'<% if (description) { %> <%= description %> <% }; %> <br>'
+			+ '</li>',
+		
+		// main: ''
+            // + '<table>'
+            // +   '<col> <col> <col> <col> <col> <col> <col>'
+            // +   '<tr>'
+            // +       '<td></td>'
+            // +       '<td></td>'
+            // +       '<td></td>'
+            // +       '<td></td>'
+            // +       '<td></td>'
+            // +       '<td></td>'
+            // +       '<td></td>'
+            // +   '</tr>'
+            // + '</table>',
 
 		anotherMonthCell: ''
             + '<td class="pre-post" id="<%= id %>">'
