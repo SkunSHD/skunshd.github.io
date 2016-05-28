@@ -56,6 +56,15 @@
 			var ol = document.createElement('ol');
 			ol.innerHTML = docFrag;
 			
+			// Days name adding here
+			if (ol.childNodes.length) {
+				var day = [', Monday', ', Tuesday', ', Wednsday', ', Thursday', ', Friday', ', Saturday', ', Sunday' ];
+				for (var i = 0; i < 7; i++) {
+				  ol.children[i].textContent = document.createElement('p').textContent = ol.children[i].textContent + day[i];
+				}
+			}
+
+			
 			return ol;	
 		},
 		
