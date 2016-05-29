@@ -78,11 +78,10 @@
 			var lsArr = app.storage.getAllData();
 			for (var i = 0; i<lsArr.length; i++) {
 				var monthMS = lsArr[i].key;
-				
 				if (!new Date(monthMS)) continue;				
-				var strEventsArray = lsArr[i].value;
+				var strEventsArray = String(lsArr[i].value);
 				if (strEventsArray.indexOf('"') == -1) continue;
-
+				
 				//  strEventsArray = [ {event: '', date: ''}, {}, {}]
 				var objEventsArray = JSON.parse(strEventsArray);
 

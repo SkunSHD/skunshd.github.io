@@ -44,16 +44,8 @@
 		
 =======
 		assemble: function(template, model) {
-			// todo 1: научить model.save() сохранять объекты model
-			
-			// тестовое собыьтие
-			// model.save({ event: 'Title', date: new Date(), names: 'Cilka, Alex', description: 'opisanie sobitiya' });
-			
 			var allMonthsEventsList = app.collection.checkEvents(model);
-			// alert('allMonthsEventsList: ' + allMonthsEventsList[0].value[22].event);
-			
 			var thisMonthEventsArray = app.collection.getThisMonthEvents(allMonthsEventsList);
-			// alert('match: ' + thisMonthEventsArray);
 			
 			var docFrag = '';
 			
@@ -61,16 +53,15 @@
 			var counter = this.preMonthDays();
 			while (counter.preCheck()) {
 				var preDate = counter.getPreDate();
-				docFrag += _.template(template)({date: preDate, names: '', description: ''});
+				docFrag += _.template(template)({event: '', date: preDate, names: '', description: ''});
 			}
 			// Adding usual days
 			for(var i=0; i<thisMonthEventsArray.length; i++) {
-				// как вставить название дня недели ?
 				if (thisMonthEventsArray[i]) {
 					docFrag += _.template(template)(thisMonthEventsArray[i].getTplObj());
 				} else {
 					// как избавиться от указания пустых свойств в объекте ниже ?
-					docFrag += _.template(template)({date: i+1, names: '', description: ''});
+					docFrag += _.template(template)({event: '', date: i+1, names: '', description: ''});
 				}
 			}
 			// Adding post days
@@ -78,11 +69,19 @@
 			while(counter.endCheck()) {
 				var postDate = counter.getPostDate();
 				// alert(postDate);
-				docFrag += _.template(template)({date: postDate, names: '', description: ''});
+				docFrag += _.template(template)({event: '', date: postDate, names: '', description: ''});
 			}
 			
 			var ol = document.createElement('ol');
 			ol.innerHTML = docFrag;
+			
+			// Days name adding here
+			if (ol.childNodes.length) {
+				var day = [', Monday', ', Tuesday', ', Wednsday', ', Thursday', ', Friday', ', Saturday', ', Sunday' ];
+				for (var i = 0; i < 7; i++) {
+				  ol.children[i].textContent = document.createElement('p').textContent = ol.children[i].textContent + day[i];
+				}
+			}
 			
 			return ol;	
 		},
@@ -132,14 +131,14 @@
 				},
 				
 				doPostDate: function() {
-					// получить объект даты последнего дня месяца
+					// get date object of last day in month
 					this.lastDateCurMonth = this.getLastDate();
 					
-					// узнать её номер дня недели
+					// figure out date name of week
 					var dayName = this.lastDateCurMonth.getDay() - 1;
 					if (dayName == -1) dayName = 6;
 
-					// сделать объект, последнего по порядку, дня в календаре(для мая - это 5 июня)
+					// get date object of last day in table
 					this.lastDateInTable = new Date(this.lastDateCurMonth);
 					this.lastDateInTable.setDate(this.lastDateCurMonth.getDate() + (6 - dayName));
 				},

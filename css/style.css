@@ -133,6 +133,9 @@ col {
 }
 ol {
 	width: 1000px;
+	position: relative;
+	left: -40px;
+    top: -10px;
 }
 .pre-post span {
 	color: #DED9D9;
