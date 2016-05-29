@@ -9,11 +9,12 @@
      *
      * @type constructor
      */
-	function Header (addEvent) {
-		this.addEvent = addEvent;
+	function Header (template) {
+		this.template = template;
+		alert(this.template);
 	}
 	
-	Header.prototype.init = function (addEvent) {
+	Header.prototype.init = function () {
 		var add = document.getElementById('add-event');
 		add.addEventListener('click', this.add, false);
 
@@ -25,8 +26,9 @@
 	}
 	
 	Header.prototype.add = function () {
-		this.addEvent = new this.addEvent();
-		this.showForm();
+		alert(this.template);
+		this.addEvent = new app.addEvent(this.template);
+		this.addEvent.showForm();
 		alert('Add');
 	}
 	

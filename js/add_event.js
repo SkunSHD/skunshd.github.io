@@ -1,13 +1,12 @@
 (function(window) {
 	'use strict';
 	
-	function AddEvent (template, model) {
+	function AddEvent (template) {
 		this.template = template;
-		this.model = model;
 	}
 	
 	AddEvent.prototype.showForm = function () {
-		alert('show form method');
+		alert(this.template);
 	}
 	
 	AddEvent.prototype.hideForm = function () {
