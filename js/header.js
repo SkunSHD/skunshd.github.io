@@ -10,7 +10,7 @@
      * @type {{init: init}}
      */
     var header = {
-        init: function() {
+        init: function(addEvent) {
             var add = document.getElementById('add-event');
             add.addEventListener('click', this.add, false);
 

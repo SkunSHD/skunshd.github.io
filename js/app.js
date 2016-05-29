@@ -15,11 +15,13 @@
 
             //all templates
             this.templates = app.templates;
-
+			
+			//add_event
+			this.addEvent = new app.addEvent(this.template.popup, app.Model);
+			
             //header
             this.header = app.header;
-            //init header event listeners
-            this.header.init();
+            this.header.init(this.addEvent);
 			
             //storage object
             this.storage = app.storage;

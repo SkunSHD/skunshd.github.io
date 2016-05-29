@@ -16,27 +16,18 @@
 			+	'<% if (description) { %> <p><%= description %></p> <% }; %>'
 			+ '</li>',
 
-		anotherMonthCell: ''
-            + '<td class="pre-post" id="<%= id %>">'
-            +		'<% if (tagName) { %> <%= tagName %>, <% }; %>'
-            +		'<span><%= day %></span>'
-            +	'</td>',
-		
-		
-		thisMonthCell: ''
-            + '<td class="<%= className %>" id="<%= id %>" >'
-            +		'<%= day %>'
-            +		'<div id="event-container">'
-            +			'<h5><%= event %></h5>'
-            +			'<p class="event-names"><%= names %></p>'
-            +			'<p class="event-description"><%= description %></p>'
-            +		'</div>'
-            +	'</td>',
-		
-		justMonthCell: ''
-            + '<td id="<%= id %>" <% if (className) { %> class="<%= className %>" <% }; %> >'
-            +	'<%= day %>'
-            +	'</td>'
+		popup: ''
+			+	'<div class="add-event-window">'
+			+		'<form class="popupform" name="popup">'
+			+			'<input class="close-button" type="button" value="x"/>'
+			+			'<input class="input-lines" name="event" placeholder="Event"/>'
+			+			'<input class="input-lines" name="date" placeholder="Date, Month, Year" />'
+			+			'<input class="input-lines" name="names" placeholder="Names of the participants" />'
+			+			'<textarea class="input-description" name="description" placeholder="Event description"></textarea>'
+			+			'<input type="button" class="add-button" value="Ok" />'
+			+			'<input type="button" class="del-button" value="Del" />'
+			+		'</form>'
+			+	'</div>'
 	}
 	
 	
