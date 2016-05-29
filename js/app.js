@@ -17,11 +17,15 @@
             this.templates = app.templates;
 			
 			//add_event
-			this.addEvent = new app.addEvent(this.template.popup, app.Model);
+			this.addEvent = new app.addEvent(this.templates.popup, app.Model);
 			
-            //header
-            this.header = app.header;
-            this.header.init(this.addEvent);
+			// header
+			this.header = new app.Header(app.Header);
+			this.header.init();
+			
+            // old header
+            // this.header = app.header;
+            // this.header.init(this.addEvent);
 			
             //storage object
             this.storage = app.storage;

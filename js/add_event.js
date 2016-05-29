@@ -7,7 +7,7 @@
 	}
 	
 	AddEvent.prototype.showForm = function () {
-		
+		alert('show form method');
 	}
 	
 	AddEvent.prototype.hideForm = function () {
