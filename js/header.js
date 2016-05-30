@@ -1,6 +1,10 @@
 (function(window) {
-	'use strict';
-	
+	'use strict';	
+
+	// todo: create a new view for the dialog. E.g. add_event.js.
+	// this view should have its own template and should use event.js (model).
+	// You will use this view also in main.js to show a dialog when user clicks on a cell. Assign this view to app.addEvent
+		
 	 /**
      * header 
      *
@@ -11,7 +15,8 @@
      */
 	function Header (template) {
 		this.template = template;
-		alert(this.template);
+		// work
+		// alert('header ' + template);
 	}
 	
 	Header.prototype.init = function () {
@@ -26,7 +31,9 @@
 	}
 	
 	Header.prototype.add = function () {
-		alert(this.template);
+		// don't work
+		// alert('head ' + this.template);
+		
 		this.addEvent = new app.addEvent(this.template);
 		this.addEvent.showForm();
 		alert('Add');

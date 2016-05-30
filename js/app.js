@@ -12,6 +12,16 @@
      */
     var calendar = {
         init: function() {
+		
+			// function checkLocalStorage()
+			// {
+			   // try {
+				  // return 'localStorage' in window && window['localStorage'] !== null && localStorage != undefined;
+			   // } catch (e) {
+				  // return e;
+			   // }
+			// }
+			// alert('alert ' + checkLocalStorage());
 
             //all templates
             this.templates = app.templates;
