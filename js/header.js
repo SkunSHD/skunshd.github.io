@@ -16,12 +16,12 @@
 	function Header (template) {
 		this.template = template;
 		// work
-		// alert('header ' + template);
+		alert('header ' + template);
 	}
 	
 	Header.prototype.init = function () {
 		var add = document.getElementById('add-event');
-		add.addEventListener('click', this.add, false);
+		add.addEventListener('click', this.add.bind(this), false);
 
 		var refresh = document.getElementById('refresh');
 		refresh.addEventListener('click', this.refresh, false);
@@ -32,8 +32,14 @@
 	
 	Header.prototype.add = function () {
 		// don't work
-		// alert('head ' + this.template);
-		
+        //it doesn't work because this function has a different context. 'this' inside this function is different
+        //from 'this' inside function Header, where you set this.template etc.
+        //to make it work - use bind. E.g. add.addEventListener('click', this.add.bind(this), false);
+		alert('head ' + this.template);
+
+        //this.template is also undefined ofr the above described reason
+        //todo 1: do not pass template to addEvent
+        //todo 2: rename addEvent to addEventView to make it clear what it is.
 		this.addEvent = new app.addEvent(this.template);
 		this.addEvent.showForm();
 		alert('Add');

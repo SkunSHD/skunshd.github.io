@@ -24,12 +24,15 @@
 			// alert('alert ' + checkLocalStorage());
 
             //all templates
+            //todo: no need to assign it to this.templtes because template are already accessible via app namespace
+            //you can get a template like this window.app.templates.popup anywhere
             this.templates = app.templates;
 			
 			//add_event
 			// this.addEvent = new app.addEvent(this.templates.popup, app.Model);
 			
 			// header
+            //No need to pass popup template here.
 			this.header = new app.Header(this.templates.popup);
 			this.header.init();
 			
