@@ -32,7 +32,6 @@
         //'this' inside this function is different from 'this' inside function Header
 		this.addEventView = new app.addEventView();
 		this.addEventView.showForm();
-		alert('Add');
 	}
 	
 	Header.prototype.search = function () {

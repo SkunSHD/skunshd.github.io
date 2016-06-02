@@ -25,7 +25,7 @@
 			+			'<input class="input-lines" name="names" placeholder="Names of the participants" />'
 			+			'<textarea class="input-description" name="description" placeholder="Event description"></textarea>'
 			+			'<input type="button" class="add-button" value="Ok" />'
-			+			'<input type="button" class="del-button" value="Del" />'
+			+			'<input type="button" class="cancel-button" value="Cancel" />'
 			+		'</form>'
 			+	'</div>'
 	}
