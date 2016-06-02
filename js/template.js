@@ -18,7 +18,6 @@
 
 		popup: ''
 			+	'<div class="add-event-window">'
-            +   '<h3>Hello from templates</h3>'
 			+		'<form class="popupform" name="popup">'
 			+			'<input class="close-button" type="button" value="x"/>'
 			+			'<input class="input-lines" name="event" placeholder="Event"/>'

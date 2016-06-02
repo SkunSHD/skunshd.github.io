@@ -2,7 +2,7 @@
     'use strict';
 
     var main = {
-        init: function(template, model) {
+        init: function(model) {
             //this is our main template.
             //todo 1: check if we have saved events
             //todo 2: calculate current month and show as many cells as we have days and pass there saved events if we have any
@@ -10,15 +10,16 @@
             //todo 4: listen to arrows to toggle between months
             //todo 5: listen to 'today' button
 			
-			var assembled = this.assemble(template, model);
+			var assembled = this.assemble(model);
             var container = document.getElementById('container');
 			container.appendChild(assembled);
         },
 		
-		assemble: function(template, model) {
+		assemble: function(model) {
+			var template = app.templates.main;
 			var allMonthsEventsList = app.collection.checkEvents(model);
 			var thisMonthEventsArray = app.collection.getThisMonthEvents(allMonthsEventsList);
-			
+
 			var docFrag = '';
 			
 			// Adding pre days
@@ -46,7 +47,6 @@
 			
 			var ol = document.createElement('ol');
 			ol.innerHTML = docFrag;
-			
 			// Days name adding here
 			if (ol.childNodes.length) {
 				var day = [', Monday', ', Tuesday', ', Wednsday', ', Thursday', ', Friday', ', Saturday', ', Sunday' ];
