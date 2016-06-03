@@ -90,7 +90,7 @@ a#button-next {
 	background-position: 0px -21px;
 }
 /*Months navigation block*/
-#today-button {
+#button-today {
 	text-align: center;
 	background: transparent url("../img/sp-bg.png") no-repeat scroll 0 0;
 	background-position: -23px 0px;

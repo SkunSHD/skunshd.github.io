@@ -22,25 +22,15 @@
 				<a href="#" id="button-previous" class="button">Previous month</a>
 				<p class="date-indicator"></p>
 				<a href="#" id="button-next"  class="button">Next month</a>
-				<div id="today-button">Today</div>
+				<div id="button-today">Today</div>
 			</time>
 			
 			<div id="container">
 			</div>
 		</div>
 	</div>
-	<div class="add-event-window" hidden="hidden">
-		<form class="popupform" name="popup">
-			<input class="close-button" type="button" value="x"/>
-			<input class="input-lines" name="event" placeholder="Event"/>
-			<input class="input-lines" name="date" placeholder="Date, Month, Year" />
-			<input class="input-lines" name="names" placeholder="Names of the participants" />
-			<textarea class="input-description" name="description" placeholder="Event description"></textarea>
-			<input type="button" class="add-button" value="Ok" />
-			<input type="button" class="del-button" value="Del" />
-		</form>
-	</div>
 	<script src="vendor/lib/underscore-min.js"></script>
+	<script src="js/add_event_view.js"></script>
 	<script src="js/template.js"></script>
     <script src="js/header.js"></script>
 	<script src="js/utils/store.js"></script>
