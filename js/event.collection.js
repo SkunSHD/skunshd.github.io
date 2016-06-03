@@ -40,6 +40,7 @@
 			var result = [];
 			//  lsArr = [ ms: [{event: '', date: ''}, ...], ms: [{},{}], ... ] 
 			var lsArr = app.storage.getAllData();
+			
 			for (var i = 0; i<lsArr.length; i++) {
 				var monthMS = lsArr[i].key;
 				if (!new Date(monthMS)) continue;				

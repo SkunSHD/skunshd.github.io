@@ -1,4 +1,4 @@
-﻿/* global app, $on */
+/* global app, $on */
 (function() {
     'use strict';
 
@@ -12,29 +12,23 @@
      */
     var calendar = {
         init: function() {
-
-            //all templates
-            this.templates = app.templates;
-
-            //header
-            this.header = app.header;
-            //init header event listeners
-            this.header.init();
+			// header
+			this.header = new app.Header();
+			this.header.init();
 			
             //storage object
-            this.storage = app.storage;
-			this.storage.init();
+			app.storage.init();
+			new app.Model( {event: 'new one', date: '', names: 'Baton, Bulcohka', description: 'Sehr guta Mann'} ).save();
 			
             //event model
             this.eventModel = new app.Model( {storage: this.storage} );
-
 			// collection
 			this.collection = app.collection;
 			
 			//header
             this.main = app.main;
             //init header event listeners
-            this.main.init(this.templates.main, this.eventModel);
+            this.main.init(this.eventModel);
         }
     };
 
