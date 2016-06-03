@@ -9,7 +9,6 @@
 		// this.storage, this.event, this.date, this.names, this.description;
 		
 		for (var key in options) {
-			if (key == 'storage') this.storage = options[key];
 			if (key == 'event') this.event = options.event;
 			if (key == 'names') this.names = options.names;
 			if (key == 'description') this.description = options.description;
@@ -24,7 +23,7 @@
 		var lsId = this.makeMonthId();
 		
 		var jsonObj = '';
-		var oldMonthArr = this.storage.getData(lsId);
+		var oldMonthArr = app.storage.getData(lsId);
 		var preparedObj = {
 			event: this.event,
 			date: this.date,
@@ -45,7 +44,7 @@
 			jsonObj = JSON.stringify(newMonthArr);
 		}
 		
-		this.storage.setData(lsId, jsonObj);
+		app.storage.setData(lsId, jsonObj);
 	},
 	
 	Model.prototype.makeMonthId = function () {
@@ -58,7 +57,7 @@
 
 	Model.prototype.monthCapacity = function (eventObj) {
 		var dateObj = eventObj.date || new Date();
-		var result = new Date(dateObj.date.getFullYear(), dateObj.date.getMonth() + 1, 0);
+		var result = new Date(dateObj.getFullYear(), dateObj.getMonth() + 1, 0);
 		return result.getDate();
 	};
 	
@@ -71,8 +70,13 @@
 		return tplObj;
 	}
 
-    Model.prototype.validate = function (attrs) {
-        //validate properties
+    Model.prototype.validate = function (formData, callback) {
+        var errors = [];
+		var formData = formData || document.forms.popup;
+		if (formData.event.value.trim() === '') errors.push({name: 'title', message: 'Title is required'});
+		if (formData.date.value.trim() === '') errors.push({name: 'date', message: 'Date is required'});
+
+		if (callback) callback(errors);
     };
 	
 	Model.prototype.getbyKey = function (millisec) {
