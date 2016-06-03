@@ -11,6 +11,7 @@
             //todo 5: listen to 'today' button
 			
 			var assembled = this.assemble(model);
+			this.addListeners(assembled);
             var container = document.getElementById('container');
 			container.appendChild(assembled);
         },
@@ -41,7 +42,6 @@
 			counter.doPostDate();
 			while(counter.endCheck()) {
 				var postDate = counter.getPostDate();
-				// alert(postDate);
 				docFrag += _.template(template)({event: '', date: postDate, names: '', description: ''});
 			}
 			
@@ -56,6 +56,45 @@
 			}
 			
 			return ol;	
+		},
+		
+		addListeners: function (node) {
+		// 'today' button
+		var todayBtn = document.getElementById('button-today');
+		todayBtn.addEventListener('click', this.goToday, false);
+		
+		// arrows
+		var rightArrowBtn = document.getElementById('button-next');
+		rightArrowBtn.addEventListener('click', this.goNextMonth, false);
+
+		var leftArrowBtn = document.getElementById('button-previous');
+		leftArrowBtn.addEventListener('click', this.goPreviousMonth, false);		
+		
+		// cells
+			var next = node.firstChild;
+			for (var i=0; i<node.childNodes.length; i++) {
+				if (next == '[object HTMLLIElement]') {
+					next.addEventListener('click', this.showPopup, false);
+				}
+				next = next.nextSibling; 	
+			}
+		},
+		
+		goToday: function() {
+			alert('today');
+		},
+		
+		goNextMonth: function() {
+			alert('next month');
+		},
+		
+		goPreviousMonth: function() {
+			alert('previous month');
+		},
+		
+		showPopup: function () {
+			var view = new app.addEventView();
+			view.showForm();
 		},
 		
 		preMonthDays: function () {

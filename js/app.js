@@ -12,7 +12,6 @@
      */
     var calendar = {
         init: function() {
-			// this.templates = app.templates;
 			// header
 			this.header = new app.Header();
 			this.header.init();
