@@ -72,9 +72,10 @@
 		
 		// cells
 			var next = node.firstChild;
+			var that = this;
 			for (var i=0; i<node.childNodes.length; i++) {
 				if (next == '[object HTMLLIElement]') {
-					next.addEventListener('click', this.showPopup, false);
+					next.addEventListener('click', function(event) {that.showPopup(event)}, false);
 				}
 				next = next.nextSibling; 	
 			}
@@ -92,9 +93,9 @@
 			alert('previous month');
 		},
 		
-		showPopup: function () {
+		showPopup: function (event) {
 			var view = new app.addEventView();
-			view.showForm();
+			view.showForm(event);
 		},
 		
 		preMonthDays: function () {

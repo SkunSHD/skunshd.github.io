@@ -5,12 +5,24 @@
 
 	}
 	
-	AddEventView.prototype.showForm = function () {
+	AddEventView.prototype.showForm = function (event) {
 		var form = this.render();
+		this.setCoords(form, event);
 		document.body.appendChild(form);
 	};
 	
-	AddEventView.prototype.showErrors = function(arr) {
+	AddEventView.prototype.setCoords = function (formWindow, event) {
+		var target = event.target;
+		var box = target.getBoundingClientRect();
+		
+		var top = box.top + document.body.scrollTop;
+		var left = box.left + target.offsetWidth;
+		
+		formWindow.firstChild.style.top = top + 'px';
+		formWindow.firstChild.style.left = left + 'px';
+	}
+	
+	AddEventView.prototype.showErrors = function (arr) {
 		var form = document.forms.popup;
 		if (arr) {
 			for (var i=0; i<arr.length; i++) {
@@ -23,7 +35,7 @@
 		}
 	}
 
-	AddEventView.prototype.render = function() {
+	AddEventView.prototype.render = function () {
 		var template = app.templates.popup;
 		var elem = document.createElement('div');
 		elem.innerHTML = template;
@@ -31,7 +43,7 @@
 		return elem;
 	}
 	
-	AddEventView.prototype.initListeners = function(elem) {
+	AddEventView.prototype.initListeners = function  (elem) {
 		var btn = elem.querySelector('.add-button');
 		btn.addEventListener('click', this.sendForm.bind(this), false);
 		
@@ -42,7 +54,7 @@
 		clsBtn.addEventListener('click', this.close, false);
 	}
 	
-	AddEventView.prototype.sendForm = function() {
+	AddEventView.prototype.sendForm = function () {
 		var self = this;
 		var model = new app.Model();
 		model.validate(document.forms.popup, self.showErrors);
