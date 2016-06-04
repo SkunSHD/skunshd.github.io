@@ -14,10 +14,22 @@
 	AddEventView.prototype.setCoords = function (formWindow, event) {
 		var target = event.target;
 		var box = target.getBoundingClientRect();
+		var offsetHeight = 310;
+		var offsetWidth = 280;
 		
 		var top = box.top + document.body.scrollTop;
 		var left = box.left + target.offsetWidth;
+		// don't work
+		// alert(formWindow.offsetHeight);
 		
+		if (box.top + document.body.scrollTop + offsetHeight > document.body.scrollHeight) {
+			top = document.body.scrollHeight - offsetHeight - 30;
+		}
+		
+		if (document.body.clientWidth < box.left + target.offsetWidth + offsetWidth) {
+			left = box.left - offsetWidth - 30;
+		}
+
 		formWindow.firstChild.style.top = top + 'px';
 		formWindow.firstChild.style.left = left + 'px';
 	}
