@@ -35,6 +35,7 @@
 	}
 	
 	Header.prototype.refresh = function () {
+		// localStorage.clear();
 		alert('Refresh');
 	}
 	

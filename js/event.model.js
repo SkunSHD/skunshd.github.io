@@ -6,53 +6,64 @@
 	*  This class doing all that concerns a single event.
 	*/
 	function Model(options) {
-		// this.storage, this.event, this.date, this.names, this.description;
-		
 		for (var key in options) {
-			if (key == 'event') this.event = options.event;
+			if (key == 'event') this.title = options.event;
 			if (key == 'names') this.names = options.names;
 			if (key == 'description') this.description = options.description;
 			if (key == 'date') {
-				if (options.date) this.date = new Date(options.date);
-				else this.date = new Date();
+				if (options.date) {
+					// alert('not new');
+					// alert(options.date);
+					this.date = new Date(options.date);
+				} else {
+					// alert('new');
+					this.date = new Date();
+				}
 			}
 		}
+		this.id = this.makeDayId();
 	}
 	
 	Model.prototype.save = function () {
-		var lsId = this.makeMonthId();
+		var lsMId = this.makeMonthId();
 		
 		var jsonObj = '';
-		var oldMonthArr = app.storage.getData(lsId);
+		var oldMonthArr = app.storage.getData(lsMId);
 		var preparedObj = {
-			event: this.event,
-			date: this.date,
+			id: this.id,
+			title: this.title,
+			date: this.date.getTime(),
 			names: this.names,
 			description: this.description
 		};
 		
 		if (oldMonthArr) {
 			oldMonthArr = JSON.parse(oldMonthArr);
-			oldMonthArr[preparedObj.date.getDate()-1] = preparedObj;
-			
+			oldMonthArr[this.date.getDate()-1] = preparedObj;
 			jsonObj = JSON.stringify(oldMonthArr);
 		} else {
 			var daysInMonth = this.monthCapacity(preparedObj);
 			var newMonthArr = new Array(daysInMonth);
-			newMonthArr[preparedObj.date.getDate()-1] = preparedObj;
-
+			newMonthArr[this.date.getDate()-1] = preparedObj;
 			jsonObj = JSON.stringify(newMonthArr);
 		}
 		
-		app.storage.setData(lsId, jsonObj);
+		app.storage.setData(lsMId, jsonObj);
 	},
 	
+	Model.prototype.makeDayId = function () {
+		var ms = new Date(this.date);
+		ms.setHours(0,0,0,0);
+		var id = ms.getTime();
+		return ms.getTime();
+	}
+	
 	Model.prototype.makeMonthId = function () {
-		var lsId = new Date(this.date);
-		lsId.setDate(1);
-		lsId.setHours(0, 0, 0, 0);
-		lsId = lsId.getTime();
-		return lsId;
+		var lsMId = new Date(this.date);
+		lsMId.setDate(1);
+		lsMId.setHours(0,0,0,0);
+		lsMId = lsMId.getTime();
+		return lsMId;
 	};
 
 	Model.prototype.monthCapacity = function (eventObj) {
@@ -63,10 +74,11 @@
 	
 	Model.prototype.getTplObj = function () {
 		var tplObj = {};
-		if (this.date) tplObj.date = this.date.getDate();
-		if (this.event) tplObj.event = this.event;
-		if (this.names) tplObj.names = this.names;
-		if (this.description) tplObj.description = this.description;
+		tplObj.id = this.id;
+		tplObj.date = this.date.getDate();
+		tplObj.title = this.title;
+		tplObj.names = this.names;
+		tplObj.description = this.description;
 		return tplObj;
 	}
 

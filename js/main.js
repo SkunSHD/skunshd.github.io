@@ -6,6 +6,7 @@
             //this is our main template.
             //todo 1: check if we have saved events
             //todo 2: calculate current month and show as many cells as we have days and pass there saved events if we have any
+			//todo 2.1: add identifier to cells ms (with standart: dd:mm:yyyy = 01.01.2001,  hh:mm:ss = 00:00:00)
             //todo 3: listen to a click on a cell and show addEvent dialog (same as in header)
             //todo 4: listen to arrows to toggle between months
             //todo 5: listen to 'today' button
@@ -18,6 +19,7 @@
 		
 		assemble: function(model) {
 			var template = app.templates.main;
+			var eventTmp = app.templates.event;
 			var allMonthsEventsList = app.collection.checkEvents(model);
 			var thisMonthEventsArray = app.collection.getThisMonthEvents(allMonthsEventsList);
 
@@ -27,57 +29,77 @@
 			var counter = this.preMonthDays();
 			while (counter.preCheck()) {
 				var preDate = counter.getPreDate();
-				docFrag += _.template(template)({event: '', date: preDate, names: '', description: ''});
+				docFrag += _.template(template)({id: '', title: '', date: preDate, names: '', description: ''});
 			}
-			// Adding usual days
+			
+			// Adding cells with date
+			var getId = counter.getDayId();
 			for(var i=0; i<thisMonthEventsArray.length; i++) {
-				if (thisMonthEventsArray[i]) {
-					docFrag += _.template(template)(thisMonthEventsArray[i].getTplObj());
-				} else {
-					// как избавиться от указания пустых свойств в объекте ниже ?
-					docFrag += _.template(template)({event: '', date: i+1, names: '', description: ''});
-				}
+				// if (thisMonthEventsArray[i]) {
+					// docFrag += _.template(template)(thisMonthEventsArray[i].getTplObj());
+				// } else {
+					// // как избежать необходимость указания пустых свойств в объекте ниже ?
+					// docFrag += _.template(template)({id: getId(), title: '', date: i+1, names: '', description: ''});
+				// }
+				docFrag += _.template(template)({id: getId(), title: '', date: i+1, names: '', description: ''});
 			}
+			
 			// Adding post days
 			counter.doPostDate();
 			while(counter.endCheck()) {
 				var postDate = counter.getPostDate();
-				docFrag += _.template(template)({event: '', date: postDate, names: '', description: ''});
+				docFrag += _.template(template)({id: '', title: '', date: postDate, names: '', description: ''});
 			}
 			
 			var ol = document.createElement('ol');
-			ol.innerHTML = docFrag;
+			ol.innerHTML = docFrag;		
+			
 			// Days name adding here
 			if (ol.childNodes.length) {
 				var day = [', Monday', ', Tuesday', ', Wednsday', ', Thursday', ', Friday', ', Saturday', ', Sunday' ];
 				for (var i = 0; i < 7; i++) {
-				  ol.children[i].textContent = document.createElement('p').textContent = ol.children[i].textContent + day[i];
+					ol.children[i].textContent = document.createElement('p').textContent = ol.children[i].textContent + day[i];
 				}
 			}
-			
+			// alert(
+
+			// Adding events
+			for (var i=0; i<ol.childNodes.length; i++) {
+				if (ol.childNodes[i].id) {
+					
+					for (var j=0; j<thisMonthEventsArray.length; j++) {
+						if (thisMonthEventsArray[j] && ol.childNodes[i].id == thisMonthEventsArray[j].id) {
+							// alert(2);
+							ol.children[i].innerHTML = ol.children[i].textContent + _.template(eventTmp)(thisMonthEventsArray[j].getTplObj());
+							// return;
+						}
+					}		
+					
+				};
+			}
 			return ol;	
 		},
 		
 		addListeners: function (node) {
-		// 'today' button
-		var todayBtn = document.getElementById('button-today');
-		todayBtn.addEventListener('click', this.goToday, false);
-		
-		// arrows
-		var rightArrowBtn = document.getElementById('button-next');
-		rightArrowBtn.addEventListener('click', this.goNextMonth, false);
+			// 'today' button
+			var todayBtn = document.getElementById('button-today');
+			todayBtn.addEventListener('click', this.goToday, false);
+			
+			// arrows
+			var rightArrowBtn = document.getElementById('button-next');
+			rightArrowBtn.addEventListener('click', this.goNextMonth, false);
 
-		var leftArrowBtn = document.getElementById('button-previous');
-		leftArrowBtn.addEventListener('click', this.goPreviousMonth, false);		
-		
-		// cells
+			var leftArrowBtn = document.getElementById('button-previous');
+			leftArrowBtn.addEventListener('click', this.goPreviousMonth, false);		
+			
+			// cells
 			var next = node.firstChild;
 			var that = this;
 			for (var i=0; i<node.childNodes.length; i++) {
 				if (next == '[object HTMLLIElement]') {
 					next.addEventListener('click', function(event) {that.showPopup(event)}, false);
 				}
-				next = next.nextSibling; 	
+				next = next.nextSibling; 
 			}
 		},
 		
@@ -160,6 +182,16 @@
 						return false;
 					}
 					return true;
+				},
+				
+				getDayId: function() {
+					var curDate = new Date(firstDateCurMonth);
+					curDate.setHours(0,0,0,0);
+					return function() {
+						var curId = curDate.getTime();
+						curDate.setDate(curDate.getDate() +1);
+						return curId;
+					}
 				}
 			};
 			

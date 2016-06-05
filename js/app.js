@@ -21,9 +21,9 @@
             this.storage = app.storage;
 			this.storage.init();
 			// new app.Model( {event: 'new one', date: '', names: 'Baton, Bulcohka', description: 'Sehr guta Mann'} ).save();
-			
+
             //event model
-            this.eventModel = new app.Model( {storage: this.storage} );
+            this.eventModel = new app.Model( {storage: this.storage, date: ''} );
 			// collection
 			this.collection = app.collection;
 			
