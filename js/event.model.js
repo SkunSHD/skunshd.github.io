@@ -11,14 +11,8 @@
 			if (key == 'names') this.names = options.names;
 			if (key == 'description') this.description = options.description;
 			if (key == 'date') {
-				if (options.date) {
-					// alert('not new');
-					// alert(options.date);
-					this.date = new Date(options.date);
-				} else {
-					// alert('new');
-					this.date = new Date();
-				}
+				if (options.date) this.date = new Date(options.date);
+				else this.date = new Date();
 			}
 		}
 		this.id = this.makeDayId();

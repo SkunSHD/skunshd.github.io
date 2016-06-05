@@ -3,14 +3,6 @@
 
     var main = {
         init: function(model) {
-            //this is our main template.
-            //todo 1: check if we have saved events
-            //todo 2: calculate current month and show as many cells as we have days and pass there saved events if we have any
-			//todo 2.1: add identifier to cells ms (with standart: dd:mm:yyyy = 01.01.2001,  hh:mm:ss = 00:00:00)
-            //todo 3: listen to a click on a cell and show addEvent dialog (same as in header)
-            //todo 4: listen to arrows to toggle between months
-            //todo 5: listen to 'today' button
-			
 			var assembled = this.assemble(model);
 			this.addListeners(assembled);
             var container = document.getElementById('container');
@@ -35,12 +27,6 @@
 			// Adding cells with date
 			var getId = counter.getDayId();
 			for(var i=0; i<thisMonthEventsArray.length; i++) {
-				// if (thisMonthEventsArray[i]) {
-					// docFrag += _.template(template)(thisMonthEventsArray[i].getTplObj());
-				// } else {
-					// // как избежать необходимость указания пустых свойств в объекте ниже ?
-					// docFrag += _.template(template)({id: getId(), title: '', date: i+1, names: '', description: ''});
-				// }
 				docFrag += _.template(template)({id: getId(), title: '', date: i+1, names: '', description: ''});
 			}
 			
@@ -61,7 +47,6 @@
 					ol.children[i].textContent = document.createElement('p').textContent = ol.children[i].textContent + day[i];
 				}
 			}
-			// alert(
 
 			// Adding events
 			for (var i=0; i<ol.childNodes.length; i++) {
@@ -69,9 +54,8 @@
 					
 					for (var j=0; j<thisMonthEventsArray.length; j++) {
 						if (thisMonthEventsArray[j] && ol.childNodes[i].id == thisMonthEventsArray[j].id) {
-							// alert(2);
 							ol.children[i].innerHTML = ol.children[i].textContent + _.template(eventTmp)(thisMonthEventsArray[j].getTplObj());
-							// return;
+							return;
 						}
 					}		
 					
@@ -121,7 +105,6 @@
 		},
 		
 		preMonthDays: function () {
-			// Displays the month is in the ls. There it is written at initialization.
 			var currentMonthMs = localStorage.getItem('current-month');
 			var firstDateCurMonth = new Date(+currentMonthMs);
 			
