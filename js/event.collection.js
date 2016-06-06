@@ -42,7 +42,7 @@
 			
 			for (var i = 0; i<lsArr.length; i++) {
 				var monthMS = lsArr[i].key;
-				if (!new Date(monthMS)) continue;				
+				if (!new Date(monthMS)) continue;
 				var strEventsArray = String(lsArr[i].value);
 				if (strEventsArray.indexOf('"') == -1) continue;
 				

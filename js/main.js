@@ -3,9 +3,20 @@
 
     var main = {
         init: function(model) {
+			this.model = model;
+            var container = document.getElementById('container');
+			
+			// next month stuff
+			if (container.lastChild == '[object HTMLOListElement]') {
+				var curDate = new Date(+localStorage.getItem('current-month'));
+				curDate.setHours(0,0,0,0);
+				curDate.setMonth(curDate.getMonth()+1);
+				localStorage.setItem('current-month', curDate.getTime());
+				container.removeChild(container.lastChild);
+			}
+			
 			var assembled = this.assemble(model);
 			this.addListeners(assembled);
-            var container = document.getElementById('container');
 			container.appendChild(assembled);
         },
 		
@@ -44,7 +55,7 @@
 			if (ol.childNodes.length) {
 				var day = [', Monday', ', Tuesday', ', Wednsday', ', Thursday', ', Friday', ', Saturday', ', Sunday' ];
 				for (var i = 0; i < 7; i++) {
-					ol.children[i].textContent = document.createElement('p').textContent = ol.children[i].textContent + day[i];
+					ol.children[i].textContent = ol.children[i].textContent + day[i];
 				}
 			}
 
@@ -55,12 +66,12 @@
 					for (var j=0; j<thisMonthEventsArray.length; j++) {
 						if (thisMonthEventsArray[j] && ol.childNodes[i].id == thisMonthEventsArray[j].id) {
 							ol.children[i].innerHTML = ol.children[i].textContent + _.template(eventTmp)(thisMonthEventsArray[j].getTplObj());
-							return;
 						}
 					}		
 					
 				};
 			}
+			
 			return ol;	
 		},
 		
@@ -71,7 +82,7 @@
 			
 			// arrows
 			var rightArrowBtn = document.getElementById('button-next');
-			rightArrowBtn.addEventListener('click', this.goNextMonth, false);
+			rightArrowBtn.addEventListener('click', this.goNextMonth.bind(this), false);
 
 			var leftArrowBtn = document.getElementById('button-previous');
 			leftArrowBtn.addEventListener('click', this.goPreviousMonth, false);		
@@ -92,7 +103,15 @@
 		},
 		
 		goNextMonth: function() {
+			// after first click: one time popped up 'next month'
+			// after second click: two times popped up 'next month'
+			// after third click: four times popped up 'next month'
+			// after fourth click: eight times popped up 'next month'
+			// ...
+			// don't anderstand why?
+			this.init(this.model);
 			alert('next month');
+			
 		},
 		
 		goPreviousMonth: function() {
@@ -105,8 +124,10 @@
 		},
 		
 		preMonthDays: function () {
+			// Displays the month is in the ls. There it is written at initialization.
 			var currentMonthMs = localStorage.getItem('current-month');
 			var firstDateCurMonth = new Date(+currentMonthMs);
+			alert(firstDateCurMonth);
 			
 			// Monday - 0 ... Sunday - 6
 			var dayName = firstDateCurMonth.getDay() - 1;
@@ -175,7 +196,8 @@
 						curDate.setDate(curDate.getDate() +1);
 						return curId;
 					}
-				}
+				},
+				
 			};
 			
 			return counter;
