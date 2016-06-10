@@ -5,16 +5,6 @@
         init: function(model) {
 			this.model = model;
             var container = document.getElementById('container');
-			
-			// next month stuff
-			if (container.lastChild == '[object HTMLOListElement]') {
-				var curDate = new Date(+localStorage.getItem('current-month'));
-				curDate.setHours(0,0,0,0);
-				curDate.setMonth(curDate.getMonth()+1);
-				localStorage.setItem('current-month', curDate.getTime());
-				container.removeChild(container.lastChild);
-			}
-			
 			var assembled = this.assemble(model);
 			this.addListeners(assembled);
 			container.appendChild(assembled);
