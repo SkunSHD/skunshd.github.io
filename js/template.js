@@ -8,6 +8,11 @@
 	*/
 	
 	var templates = {
+		li: ''
+		+	'<li class="calendar-left-side calendar-list-item">'
+		+	'<% arr.join(</li><li class="calendar-left-side calendar-list-item">); %>'
+		+	'</li>',
+		
 		main: ''
 			+ '<li class="calendar-left-side calendar-list-item"'
 			+ '<% if (id) { %> id="<%= id %>" <% }; %>'

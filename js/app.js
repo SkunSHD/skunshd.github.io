@@ -27,10 +27,7 @@
 			// collection
 			this.collection = app.collection;
 			
-			//header
-            this.main = app.main;
-            //init header event listeners
-            this.main.init(this.eventModel);
+			app.main.newCal().init();
 
         }
     };
