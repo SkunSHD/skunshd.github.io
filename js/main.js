@@ -4,18 +4,21 @@
     var main = {
 		
 		newCal: function() {
-			var wrap, label,  
+			var wrap, label, todayBtn,
 			months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]; 
 	 
 			function init(newWrap) { 
 				wrap = document.getElementById('content');
+				todayBtn = document.getElementById('button-today');
 				label = document.querySelector('.date-indicator');
 				
 				wrap.querySelector("#button-previous").addEventListener('click', function () { switchMonth(false); }); 
 				wrap.querySelector("#button-next").addEventListener('click', function () { switchMonth(true);  }); 
 	
+				todayBtn.addEventListener('click', function () { switchMonth(null, new Date().getMonth(), new Date().getFullYear()); } ); 
+				todayBtn.click();
+				
 				label.addEventListener('click', function () { switchMonth(null, new Date().getMonth(), new Date().getFullYear()); } ); 
-				label.click();
 			} 
 	 
 			function switchMonth(next, month, year) {
