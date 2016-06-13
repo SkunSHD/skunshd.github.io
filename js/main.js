@@ -4,7 +4,7 @@
     var main = {
 		
 		newCal: function() {
-			var wrap, label, todayBtn,
+			var wrap, label, todayBtn, monthsList, tempEl,
 			months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]; 
 	 
 			function init(newWrap) { 
@@ -18,26 +18,75 @@
 				todayBtn.addEventListener('click', function () { switchMonth(null, new Date().getMonth(), new Date().getFullYear()); } ); 
 				todayBtn.click();
 				
-				label.addEventListener('click', function () { switchMonth(null, new Date().getMonth(), new Date().getFullYear()); } ); 
-			} 
+				label.addEventListener('click', function () { swithMonthsList(null, label.textContent.trim().split(" ")[1]); } ); 
+			}
+			
+			function swithMonthsList(next, year) {
+				var tempYear = parseInt(label.textContent.trim());
+				if (!year) {
+					if (next) { 
+						year = tempYear + 1; 
+					} else if (!next) { 
+						year = tempYear - 1; 
+					}
+				}
+				
+				if (!document.querySelector('.curr-months')) monthsList = createMonthsList();
+			
+				// if I clicking twice on label, heir will be problem, which class I need to search and delete: curr-days of curr-months
+				// so I have to rewright: e.g. firstChild.remove
+				tempEl = document.querySelector('.curr-days') || document.querySelector('.curr-months');
+				tempEl.parentNode.replaceChild(monthsList.monthsList(), tempEl);
+				
+				label.textContent = year;
+			}
+			
+			function createMonthsList() {
+				var curr, year, tempYear, resMonList;
+				
+				if (createMonthsList.cache['months-list']) {
+					return createMonthsList.cache['months-list']; 
+				} else {
+					createMonthsList.cache['months-list'] = {}; 
+				}
+				
+				resMonList = _.template(app.templates.monthLi)({arr: months});
+				resMonList = '<ol class="curr-months">' + resMonList + '</ol>';
+				tempEl = document.createElement('div');
+				tempEl.innerHTML = resMonList;
+				resMonList = tempEl.firstChild;
+				resMonList = resMonList.cloneNode(true);
+				
+				createMonthsList.cache['months-list'] = { monthsList : function () { return resMonList }, label : year }; 
+				return createMonthsList.cache['months-list'];
+			}
+			
+			createMonthsList.cache = {};
 	 
 			function switchMonth(next, month, year) {
+				var container = document.getElementById('container');
+				if (container.children[0].className == 'curr-months') {
+					swithMonthsList(next);
+					return;
+				}
+				
 				var curr = label.textContent.trim().split(" "), calendar, tempYear =  parseInt(curr[1], 10);
 				if (!month) {
 					if (next) {
 						if (curr[0] === "December") { 
 							month = 0; 
 						} else { 
-							month = months.indexOf(curr[0]) + 1; 
+							month = months.indexOf(curr[0]) + 1;
 						} 
 					} else { 
 						if (curr[0] === "January") { 
 							month = 11; 
 						} else { 
-							month = months.indexOf(curr[0]) - 1; 
+							month = months.indexOf(curr[0]) - 1;
 						} 
 					}
 				}
+				
 				if (!year) { 
 					if (next && month === 0) { 
 						year = tempYear + 1; 
@@ -45,17 +94,18 @@
 						year = tempYear - 1; 
 					} else { 
 						year = tempYear; 
-					} 
+					}
 				}
 				// create new calendar, delete old one, insert new one, insert label
 				calendar =  createCal(year, month); 
 				
 				var container = document.getElementById('container');
-				container.removeChild(document.querySelector('.curr'));
+				container.removeChild(document.querySelector('.curr-days'));
 				container.appendChild(calendar.calendar());
 						
 				label.textContent = calendar.label;
 			} 
+			
 	 
 			function createCal(year, month) {
 				var day = 1, i, j, haveDays = true,  
@@ -67,7 +117,7 @@
 				if (startDay == 0) startDay = 6;
 				else startDay -= 1;
 
-				if (createCal.cache[year]) { 
+				if (createCal.cache[year]) {
 					if (createCal.cache[year][month]) {
 						return createCal.cache[year][month]; 
 					}
@@ -105,18 +155,14 @@
 					} 
 					calendar = calendar.slice(0, 5); 
 				}
-				var tmpl = app.templates.li;
 				for (i = 0; i < calendar.length; i++) {
-					// calendar[i] = "<li class='calendar-left-side calendar-list-item'>" + calendar[i].join("</li><li class='calendar-left-side calendar-list-item'>") + "</li>"; 
-					calendar[i] = _.template(tmpl)({arr: calendar[i]});
+					calendar[i] = _.template(app.templates.li)({arr: calendar[i]});
 				}
 				
-				// calendar = $("<ol>" + calendar.join("") + "</ol>").addClass("curr"); 
-				calendar = "<ol>" + calendar.join("") + "</ol>";
+				calendar = '<ol class="curr-days">' + calendar.join("") + '</ol>';
 				var tempWrap= document.createElement('div');
 				tempWrap.innerHTML = calendar;
 				calendar = tempWrap.firstChild;
-				calendar.className = "curr";
 				
 				// adding class 'nil' to empty li elements and 'today' for today day
 				for (i=0; i<calendar.childNodes.length; i++) {
@@ -130,7 +176,6 @@
 				
 				createCal.cache[year][month] = { calendar : function () { return calendar.cloneNode(true) }, label : months[month] + " " + year }; 
 				return createCal.cache[year][month];
-				
 			}
 			
 			createCal.cache = {};
