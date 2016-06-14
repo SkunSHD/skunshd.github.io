@@ -33,8 +33,6 @@
 				
 				if (!document.querySelector('.curr-months')) monthsList = createMonthsList();
 			
-				// if I clicking twice on label, heir will be problem, which class I need to search and delete: curr-days of curr-months
-				// so I have to rewright: e.g. firstChild.remove
 				tempEl = document.querySelector('.curr-days') || document.querySelector('.curr-months');
 				tempEl.parentNode.replaceChild(monthsList.monthsList(), tempEl);
 				
@@ -65,7 +63,7 @@
 	 
 			function switchMonth(next, month, year) {
 				var container = document.getElementById('container');
-				if (container.children[0].className == 'curr-months') {
+				if (!month && !year && container.children[0].className == 'curr-months') {
 					swithMonthsList(next);
 					return;
 				}
@@ -86,7 +84,6 @@
 						} 
 					}
 				}
-				
 				if (!year) { 
 					if (next && month === 0) { 
 						year = tempYear + 1; 
@@ -99,8 +96,7 @@
 				// create new calendar, delete old one, insert new one, insert label
 				calendar =  createCal(year, month); 
 				
-				var container = document.getElementById('container');
-				container.removeChild(document.querySelector('.curr-days'));
+				wrap.children[1].removeChild(wrap.querySelector('.curr-days') || wrap.querySelector('.curr-months'));
 				container.appendChild(calendar.calendar());
 						
 				label.textContent = calendar.label;

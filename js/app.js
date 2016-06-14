@@ -28,7 +28,6 @@
 			this.collection = app.collection;
 			
 			app.main.newCal().init();
-
         }
     };
 
