@@ -37,6 +37,15 @@
 				tempEl.parentNode.replaceChild(monthsList.monthsList(), tempEl);
 				
 				label.textContent = year;
+				var el = document.querySelector('.curr-months');
+				el.addEventListener('click', handler, false);
+			}
+			
+			function handler(e) {
+				event = event || window.event;
+				var target = event.target || event.srcElement;
+				alert(target.textContent);
+				switchMonth(null, months.indexOf(target.textContent), label.textContent.trim());
 			}
 			
 			function createMonthsList() {
@@ -67,8 +76,12 @@
 					swithMonthsList(next);
 					return;
 				}
+				if (!container.children[0].className == 'curr-months') {
+					var curr = label.textContent.trim().split(" "), calendar, tempYear =  parseInt(curr[1], 10);
+				} else {
+					var curr = label.textContent.trim(), calendar, tempYear =  parseInt(curr, 10);
+				}
 				
-				var curr = label.textContent.trim().split(" "), calendar, tempYear =  parseInt(curr[1], 10);
 				if (!month) {
 					if (next) {
 						if (curr[0] === "December") { 
