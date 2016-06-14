@@ -22,7 +22,8 @@
 			}
 			
 			function swithMonthsList(next, year) {
-				var tempYear = parseInt(label.textContent.trim());
+				var tempYear = parseInt(label.textContent.trim(), 10);
+
 				if (!year) {
 					if (next) { 
 						year = tempYear + 1; 
@@ -37,6 +38,7 @@
 				tempEl.parentNode.replaceChild(monthsList.monthsList(), tempEl);
 				
 				label.textContent = year;
+				
 				var el = document.querySelector('.curr-months');
 				el.addEventListener('click', handler, false);
 			}
@@ -49,8 +51,8 @@
 			}
 			
 			function createMonthsList() {
-				var curr, year, tempYear, resMonList;
-				
+				var curr, year = label.textContent.trim().split(' ')[1], resMonList;
+				alert('createMonthsList: ' + year);
 				if (createMonthsList.cache['months-list']) {
 					return createMonthsList.cache['months-list']; 
 				} else {
@@ -73,15 +75,17 @@
 			function switchMonth(next, month, year) {
 				var container = document.getElementById('container');
 				if (!month && !year && container.children[0].className == 'curr-months') {
+					alert('switchMonth');
 					swithMonthsList(next);
 					return;
 				}
-				if (!container.children[0].className == 'curr-months') {
-					var curr = label.textContent.trim().split(" "), calendar, tempYear =  parseInt(curr[1], 10);
-				} else {
-					var curr = label.textContent.trim(), calendar, tempYear =  parseInt(curr, 10);
+				var curr = label.textContent.trim().split(" "), calendar, tempYear;
+				if (curr[1]) {
+					tempYear =  parseInt(curr[1], 10);
+				} else if (curr[0]) {
+					tempYear =  parseInt(curr, 10);
 				}
-				
+				alert('tempYear: ' + tempYear);
 				if (!month) {
 					if (next) {
 						if (curr[0] === "December") { 
