@@ -1,44 +1,40 @@
-(function(window) {
-	'use strict';	
+(function (window) {
+    'use strict';
 
-	 /**
-     * header 
+    /**
+     * header
      *
      * @description
      *  Handles header view events
      *
      * @type constructor
      */
-	function Header () {
+    function Header() {}
 
-	}
-	
-	Header.prototype.init = function () {
-		var add = document.getElementById('add-event');
-		add.addEventListener('click', this.add.bind(this), false);
+    Header.prototype.init = function () {
+        var add = document.getElementById('add-event');
+        add.addEventListener('click', this.add.bind(this), false);
 
-		var refresh = document.getElementById('refresh');
-		refresh.addEventListener('click', this.refresh, false);
+        var refresh = document.getElementById('refresh');
+        refresh.addEventListener('click', this.refresh, false);
 
-		var search = document.getElementById('search');
-		search.addEventListener('input', this.search, false);
-	}
-	
-	Header.prototype.add = function () {
-		this.addEventView = new app.addEventView();
-		this.addEventView.showForm();
-	}
-	
-	Header.prototype.search = function () {
-		alert('Search');
-	}
-	
-	Header.prototype.refresh = function () {
-		// localStorage.clear();
-		alert('Refresh');
-	}
-	
-	window.app = window.app || {};
-	window.app.Header = Header;
-	
+        var search = document.getElementById('search');
+        search.addEventListener('input', this.search, false);
+    };
+
+    Header.prototype.add = function (event) {
+        new app.addEventView().showForm(event);
+    };
+
+    Header.prototype.search = function () {
+        alert('Search');
+    };
+
+    Header.prototype.refresh = function () {
+        alert('Refresh');
+    };
+
+    window.app = window.app || {};
+    window.app.Header = Header;
+
 })(window);
