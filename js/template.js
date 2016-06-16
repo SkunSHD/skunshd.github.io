@@ -15,7 +15,7 @@
 		
 		monthLi: ''
 		+	'<% for(var i = 0, l=arr.length; i < l; i++) { %>'
-		+       '<li class="calendar-left-side calendar-list-item"><%=arr[i]%></li>'
+		+       '<li class="calendar-left-side calendar-list-months"><%=arr[i]%></li>'
 		+	'<% } %>',
 		
 		main: ''

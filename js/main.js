@@ -17,76 +17,27 @@
 	
 				todayBtn.addEventListener('click', function () { switchMonth(null, new Date().getMonth(), new Date().getFullYear()); } ); 
 				todayBtn.click();
-				
-				label.addEventListener('click', function () { swithMonthsList(null, label.textContent.trim().split(" ")[1]); } ); 
-			}
-			
-			function swithMonthsList(next, year) {
-				var tempYear = parseInt(label.textContent.trim(), 10);
 
-				if (!year) {
-					if (next) { 
-						year = tempYear + 1; 
-					} else if (!next) { 
-						year = tempYear - 1; 
-					}
-				}
-				
-				if (!document.querySelector('.curr-months')) monthsList = createMonthsList();
-			
-				tempEl = document.querySelector('.curr-days') || document.querySelector('.curr-months');
-				tempEl.parentNode.replaceChild(monthsList.monthsList(), tempEl);
-				
-				label.textContent = year;
-				
-				var el = document.querySelector('.curr-months');
-				el.addEventListener('click', handler, false);
+				label.addEventListener('click', function () { switchMonthsList(null, label.textContent.trim().split(" ")[1] || label.textContent.trim(), 'label'); } ); 
 			}
 			
-			function handler(e) {
-				event = event || window.event;
-				var target = event.target || event.srcElement;
-				alert(target.textContent);
-				switchMonth(null, months.indexOf(target.textContent), label.textContent.trim());
-			}
-			
-			function createMonthsList() {
-				var curr, year = label.textContent.trim().split(' ')[1], resMonList;
-				alert('createMonthsList: ' + year);
-				if (createMonthsList.cache['months-list']) {
-					return createMonthsList.cache['months-list']; 
-				} else {
-					createMonthsList.cache['months-list'] = {}; 
-				}
-				
-				resMonList = _.template(app.templates.monthLi)({arr: months});
-				resMonList = '<ol class="curr-months">' + resMonList + '</ol>';
-				tempEl = document.createElement('div');
-				tempEl.innerHTML = resMonList;
-				resMonList = tempEl.firstChild;
-				resMonList = resMonList.cloneNode(true);
-				
-				createMonthsList.cache['months-list'] = { monthsList : function () { return resMonList }, label : year }; 
-				return createMonthsList.cache['months-list'];
-			}
-			
-			createMonthsList.cache = {};
-	 
 			function switchMonth(next, month, year) {
-				var container = document.getElementById('container');
-				if (!month && !year && container.children[0].className == 'curr-months') {
-					alert('switchMonth');
-					swithMonthsList(next);
+
+				if (!month && !year && document.querySelector('.curr-months')) {
+					switchMonthsList(next, null, 'arrow');
+					return;
+				} else if (!month && !year && document.querySelector('.curr-years')) {
+					switchYearsList(next, null, 'arrow');
 					return;
 				}
+				
 				var curr = label.textContent.trim().split(" "), calendar, tempYear;
 				if (curr[1]) {
 					tempYear =  parseInt(curr[1], 10);
 				} else if (curr[0]) {
 					tempYear =  parseInt(curr, 10);
 				}
-				alert('tempYear: ' + tempYear);
-				if (!month) {
+				if (!month && month != '0') {
 					if (next) {
 						if (curr[0] === "December") { 
 							month = 0; 
@@ -113,8 +64,8 @@
 				// create new calendar, delete old one, insert new one, insert label
 				calendar =  createCal(year, month); 
 				
-				wrap.children[1].removeChild(wrap.querySelector('.curr-days') || wrap.querySelector('.curr-months'));
-				container.appendChild(calendar.calendar());
+				wrap.children[1].removeChild(wrap.querySelector('.curr-days') || wrap.querySelector('.curr-months') || document.querySelector('.curr-years'));
+				document.getElementById('container').appendChild(calendar.calendar());
 						
 				label.textContent = calendar.label;
 			} 
@@ -192,6 +143,118 @@
 			}
 			
 			createCal.cache = {};
+			
+			function switchMonthsList(next, year, context) {
+				if (document.querySelector('.curr-months') && context == 'label') {
+					switchYearsList(null, year);
+					return;
+				}
+				
+				var tempYear = parseInt(label.textContent.trim(), 10);
+
+				if (!year) {
+					if (next) {
+						year = tempYear + 1; 
+					} else if (!next) {
+						year = tempYear - 1; 
+					}
+				}
+				
+				if (!document.querySelector('.curr-months')) monthsList = createMonthsList();
+			
+				tempEl = document.querySelector('.curr-days') || document.querySelector('.curr-months') || document.querySelector('.curr-years');
+				tempEl.parentNode.replaceChild(monthsList.monthsList(), tempEl);
+				
+				label.textContent = year;
+				
+				var addedMonthsList = document.querySelector('.curr-months');
+				addedMonthsList.addEventListener('click', monthsHandler, false);
+			}
+			
+			function monthsHandler(e) {
+				event = event || window.event;
+				var target = event.target || event.srcElement;
+				switchMonth(null, months.indexOf(target.textContent), label.textContent.trim());
+			}
+			
+			function createMonthsList() {
+				var curr, year = label.textContent.trim().split(' ')[1], resMonList;
+
+				if (createMonthsList.cache['months-list']) {
+					return createMonthsList.cache['months-list']; 
+				} else {
+					createMonthsList.cache['months-list'] = {}; 
+				}
+				
+				resMonList = _.template(app.templates.monthLi)({arr: months});
+				resMonList = '<ol class="curr-months">' + resMonList + '</ol>';
+				tempEl = document.createElement('div');
+				tempEl.innerHTML = resMonList;
+				resMonList = tempEl.firstChild;
+				resMonList = resMonList.cloneNode(true);
+				
+				createMonthsList.cache['months-list'] = { monthsList : function () { return resMonList } }; 
+				return createMonthsList.cache['months-list'];
+			}
+			
+			createMonthsList.cache = {};
+			
+			function switchYearsList(next, year, context) {
+				if (!year) {
+					var tempYear = label.textContent.split(' - ')[0];
+					tempYear = +tempYear + 6;
+					if (next) {
+						year = tempYear + 12;
+					} else {
+						year = tempYear - 12;
+					}
+				}
+				var start = +year-6, end = +year+5;
+				
+				var yearsList = createYearsList(year);
+				
+				tempEl = document.querySelector('.curr-days') || document.querySelector('.curr-months') || document.querySelector('.curr-years');
+				tempEl.parentNode.replaceChild(yearsList.yearsList(), tempEl);
+				
+				label.textContent = start + ' - ' + end;
+				
+				var addedYearsist = document.querySelector('.curr-years');
+				addedYearsist.addEventListener('click', yearsHandler, false);
+			}
+			
+			function yearsHandler(e) {
+				event = event || window.event;
+				var target = event.target || event.srcElement;
+				switchMonthsList(null, target.textContent);
+			}
+			
+			function createYearsList(year) {
+				if (createYearsList.cache[year]) {
+					return createYearsList.cache[year];
+				} else {
+					createYearsList.cache[year] = {};
+				}
+				
+				var resYearsList = new Array(12), start, i;
+				start = year - 6;
+				
+				for (i=0; i<resYearsList.length; i++) resYearsList[i] = start + i;
+				
+				resYearsList = _.template(app.templates.monthLi)({arr: resYearsList});
+				
+				resYearsList = '<ol class="curr-years">' + resYearsList + '</ol>';
+				tempEl = document.createElement('div');
+				tempEl.innerHTML = resYearsList;
+				resYearsList = tempEl.firstChild;
+				resYearsList = resYearsList.cloneNode(true);
+				
+				createYearsList.cache[year] = { yearsList : function () { return resYearsList } }; 
+				return createYearsList.cache[year];
+			}
+				
+			createYearsList.cache = {};
+	 
+			
 			
 			return { 
 				init : init, 
