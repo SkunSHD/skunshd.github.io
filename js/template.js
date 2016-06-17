@@ -8,14 +8,30 @@
 	*/
 	
 	var templates = {
+		li: ''
+            +	'<% for(var i = 0, l=arr.length; i < l; i++) { %>'
+            +       '<li class="calendar-left-side calendar-list-item"><%=i %></li>'
+            +	'<% } %>',
+		
 		main: ''
-			+ '<li class="calendar-left-side calendar-list-item">'
+			+ '<li class="calendar-left-side calendar-list-item"'
+			+ '<% if (id) { %> id="<%= id %>" <% }; %>'
+			+ '>'
 			+	'<%-date%>'
-			+	'<% if (event) { %> <p><%= event %></p> <% }; %>'
+			+	'<% if (title) { %> <p><%= event %></p> <% }; %>'
 			+	'<% if (names) { %> <p><%= names %></p> <% }; %>'
 			+	'<% if (description) { %> <p><%= description %></p> <% }; %>'
 			+ '</li>',
-
+			
+		event: ''
+			+	'<h4>'
+			+		'<%=title%>'
+			+	'</h4>'
+			+	'<p>'
+			+ 		'<%=names%>'
+			+	'</p>'
+			+	'<%=description%>',
+			
 		popup: ''
 			+	'<div class="add-event-window">'
 			+		'<form class="popupform" name="popup">'

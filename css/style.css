@@ -102,7 +102,7 @@ a#button-next {
 	padding-top: 2px;
 	cursor: pointer;
 }
-/*Таблица с датами*/
+/*Tabel with dates*/
 h5 {
 	margin: 5px 0 0 0;
 }
@@ -158,6 +158,11 @@ td p {
 }
 .event-names {
 	margin-top: 5px;
+}
+ol li span:last-child {
+	position: relative;
+	top: 87px;
+    right: 10px;
 }
 /* Fast add popup window */
 .fast-add-container {
@@ -258,8 +263,11 @@ td p {
 .td-with-note  {
 	background: #EBFFF2;
 }
- h5  {
+h4  {
 	color: #4C4C4C;
+}
+h4, p {
+	margin: 5px 0;
 }
 /*Add event Window*/
 input, textarea {
@@ -275,8 +283,6 @@ input, textarea {
 	box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, .3);
 	border-radius: 4px;
 	padding: 20px 0 0 25px;
-	top: 90px;
-	left: 220px;
 }
 .add-event-window input {
 	display: block;

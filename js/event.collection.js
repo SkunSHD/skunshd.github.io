@@ -11,7 +11,6 @@
 		},
 	
 		getThisMonthEvents: function(array) {
-			// alert(array.key);
 			var ms = new Date().getTime();
 			var key = this.makeMonthId(ms);
 			for(var i=0; i<array.length; i++) {
@@ -25,29 +24,29 @@
 		},
 		
 		remove: function(id) {
-
+			
 		},
 		
 		makeMonthId: function (ms) {
 			var lsId = new Date(ms);
 			lsId.setDate(1);
-			lsId.setHours(0, 0, 0, 0);
+			lsId.setHours(0,0,0,0);
 			lsId = lsId.getTime();
 			return lsId;
 		},
 		
 		getAllEvents: function (model) {
 			var result = [];
-			//  lsArr = [ ms: [{event: '', date: ''}, ...], ms: [{},{}], ... ] 
+			//  lsArr = [ ms: [{title: '', date: ''}, ...], ms: [{},{}], ... ] 
 			var lsArr = app.storage.getAllData();
 			
 			for (var i = 0; i<lsArr.length; i++) {
 				var monthMS = lsArr[i].key;
-				if (!new Date(monthMS)) continue;				
+				if (!new Date(monthMS)) continue;
 				var strEventsArray = String(lsArr[i].value);
 				if (strEventsArray.indexOf('"') == -1) continue;
 				
-				//  strEventsArray = [ {event: '', date: ''}, {}, {}]
+				//  strEventsArray = [ {title: '', date: ''}, {}, {}]
 				var objEventsArray = JSON.parse(strEventsArray);
 
 				var modelArray = this.createModels(objEventsArray, model);
