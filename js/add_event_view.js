@@ -73,5 +73,5 @@
 
     window.app = window.app || {};
     window.app.addEventView = AddEventView;
-
+	
 })(window);
