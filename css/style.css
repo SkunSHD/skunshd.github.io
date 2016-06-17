@@ -380,7 +380,17 @@ input[name='eventEdit'] {
     padding: 10px;
     overflow: hidden;
 }
-.calendar-list-item:hover {
+.calendar-list-months, .calendar-list-years {
+	display: block;
+    color: #999;
+    font-size: 12px;
+    border: 1px solid #ebebeb;
+    width: 128px;
+    height: 105px;
+    padding: 10px;
+    overflow: hidden;
+}
+.calendar-list-item:hover, .calendar-list-months:hover, .calendar-list-years:hover{
 	border: 1px solid #85C6FA;
 	cursor: pointer;
 }
