@@ -83,12 +83,11 @@
             var daysInMonths = [31, (((year%4==0)&&(year%100!=0))||(year%400==0)) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
             var calendar = [];
             var startDay = new Date(year, month, day).getDay();
+            startDay == 0 ? startDay = 6 : startDay -= 1;
+			var preFirstDay = this.getDateAgo(new Date(year, month, day), startDay).getDate();
+			var postFirstDay = 1;
             this.cache = {};
-
-            // mon==0 ... san==6
-            if (startDay == 0) startDay = 6;
-            else startDay -= 1;
-    
+			
             if (this.cache[year]) {
                 if (this.cache[year][month]) {
                     return this.cache[year][month];
@@ -96,20 +95,22 @@
             } else {
                 this.cache[year] = {};
             }
-    
+			
             i = 0;
             while (haveDays) {
                 calendar[i] = [];
                 for (j = 0; j < 7; j++) {
                     if (i === 0) {
-                        if (j === startDay) {
+						if (j < startDay) {
+							calendar[i][j] = preFirstDay++;
+						} else if (j === startDay) {
                             calendar[i][j] = day++;
                             startDay++;
                         }
                     } else if (day <= daysInMonths[month]) {
                         calendar[i][j] = day++;
                     } else {
-                        calendar[i][j] = "";
+                        calendar[i][j] = postFirstDay++;
                         haveDays = false;
                     }
                     if (day > daysInMonths[month]) {
@@ -145,10 +146,26 @@
                     calendar.children[i].className += ' today';
                 }
             }
+			
+			calendar = this.addDaysNames(calendar);
 
             this.cache[year][month] = { calendar : function () { return calendar.cloneNode(true) }, label : this.months[month] + " " + year };
             return this.cache[year][month];
         },
+		
+		addDaysNames: function (parNode) {
+			var tagsName = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sanday"];
+			for (var i=0; i<7; i++) {
+				parNode.children[i].textContent += ', ' + tagsName[i];
+			}
+			return parNode;
+		},
+		
+		getDateAgo: function (date, days) {
+			var dateCopy = new Date(date);
+			dateCopy.setDate(dateCopy.getDate() - days);
+			return dateCopy;
+		},
 		
 		switchMonthsList: function (next, year, context) {
 			if (document.querySelector('.curr-years') && context == 'label') {
