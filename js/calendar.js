@@ -20,30 +20,51 @@
             var _self = this;
 
             this.wrap.querySelector('#button-previous').addEventListener('click', function () {
-                _self.switchMonth(false);
+                _self.switchMonth('prev');
             });
             this.wrap.querySelector('#button-next').addEventListener('click', function () {
-                _self.switchMonth(true);
+                _self.switchMonth('next');
             });
 
             this.todayBtn.addEventListener('click', function () {
-                _self.switchMonth(null, new Date().getMonth(), new Date().getFullYear());
+                _self.switchMonth('today');
             });
 
             //show today by default
-            _self.switchMonth(null, new Date().getMonth(), new Date().getFullYear());
+            _self.switchMonth('today');
 
             this.label.addEventListener('click', function () {
-                _self.switchMonthsList(null, _self.label.textContent.trim().split(" ")[1] || _self.label.textContent.trim(), 'label');
+                _self.switchMonthsList('label');
             });
         },
-
-        switchMonth: function (next, month, year) {
+		// were (next, month, year)
+        switchMonth: function (context) {
+			var next, month, year;
+			switch(context) {
+				case 'next':
+				next = true;
+				break;
+				case 'prev':
+				next = false;
+				break;
+				case 'today':
+				next = null;
+				month = new Date().getMonth();
+				year = new Date().getFullYear();
+				break;
+				case 'select month':
+				next = null;
+				month = this.months.indexOf(this.target.textContent);
+				year = this.label.textContent.trim();
+				break;
+			}
+			
             if (!month && !year && document.querySelector('.curr-months')) {
-                this.switchMonthsList(next, null, 'arrow');
+                // this.switchMonthsList(next, null, 'arrow');
+                this.switchMonthsList('arrow', next);
                 return;
             } else if (!month && !year && document.querySelector('.curr-years')) {
-                this.switchYearsList(next, null, 'arrow');
+                this.switchYearsList(next, null);
                 return;
             }
 
@@ -180,8 +201,12 @@
             dateCopy.setDate(dateCopy.getDate() - days);
             return dateCopy;
         },
-
-        switchMonthsList: function (next, year, context) {
+		// was (next, year, context)
+        switchMonthsList: function (context, next) {
+			var year;
+			
+			if (context == 'label') year = this.label.textContent.trim().split(" ")[1] || this.label.textContent.trim();
+		
             if (document.querySelector('.curr-years') && context == 'label') {
                 return;
             } else if (document.querySelector('.curr-months') && context == 'label') {
@@ -212,8 +237,9 @@
 
         monthsHandler: function (event) {
             event = event || window.event;
-            var target = event.target || event.srcElement;
-            this.switchMonth(null, this.months.indexOf(target.textContent), this.label.textContent.trim());
+            this.target = event.target || event.srcElement;
+            // this.switchMonth(null, this.months.indexOf(target.textContent), this.label.textContent.trim());
+            this.switchMonth('select month');
         },
 
         createMonthsList: function () {
@@ -239,7 +265,7 @@
             return this.cache['months-list'];
         },
 
-        switchYearsList: function (next, year, context) {
+        switchYearsList: function (next, year) {
             if (!year) {
                 var tempYear = this.label.textContent.split(' - ')[0];
                 tempYear = +tempYear + 6;
