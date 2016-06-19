@@ -297,7 +297,11 @@
         }
     };
 
+    var calendar_api = {
+        init: calendar.init.bind(calendar)
+    };
+
     window.app = window.app || {};
-    window.app.calendar = calendar;
+    window.app.calendar = calendar_api;
 
 })(window);
