@@ -1,7 +1,9 @@
 (function(window) {
     'use strict';
 
-    function ShowDateMethods() {}
+    function ShowDateMethods() {
+
+	}
 
     // Monat und Jar aus localStorage
     ShowDateMethods.getLocalDateObj = function() {
@@ -20,17 +22,18 @@
     }
 
     ShowDateMethods.showToday = function () {
+		
         var today = new Date();
-        localStorage.setItem('month', today.getMonth());
-        localStorage.setItem('year', today.getFullYear());
+        window.app.storage.setData('month', today.getMonth());
+        window.app.storage.setData('year', today.getFullYear());
 
         new window.app.Calendar().createCalendar();
         ShowDateMethods.showDate();
     }
  
     ShowDateMethods.setMonthYearInLocalStorage = function(month, year) {
-        localStorage.setItem(month, today.getMonth());
-        localStorage.setItem(year, today.getFullYear());
+        window.app.storage.setData(month, today.getMonth());
+        window.app.storage.setData(year, today.getFullYear());
     }
 
     ShowDateMethods.listener = function() {
@@ -45,20 +48,18 @@
     ShowDateMethods.showDate = function() {
         var parent = document.getElementById('day-select');
         // first time adding date or not
+		// this 'if' part(true) moved in calendar.js
         if(parent.children[1].className != 'date-indicator') {
             var date = new Date();
-            localStorage.setItem('month', date.getMonth());
-            localStorage.setItem('year', date.getFullYear());
+            window.app.storage.setData('month', date.getMonth());
+            window.app.storage.setData('year', date.getFullYear());
 
             var dateString = date.toLocaleString('en', { year: 'numeric', month: 'long' });
-
-            var p = document.createElement('p');
-            p.className = 'date-indicator';
-            p.innerHTML = dateString;
-
-            parent.insertBefore(p, parent.children[1]);
+			
+			var parent = document.querySelector('date-indicator');
+			parent.appendChild(dateString);
         } else {
-
+		
             var selectedDate = ShowDateMethods.getLocalDateObj();
             var selectedDateString = selectedDate.toLocaleString('en', { year: 'numeric', month: 'long'});
 
@@ -119,7 +120,7 @@
                 // Methods.createAndSetTag = function(tag, className, container, text)
                 var date = new Date();
 
-                var currentLi = window.app.Methods.createAndSetTag('li', 'calendar-left-side calendar-list-item calendar-list-item', ol, '<span>' + getMonth() + '</span>', goInMonthYear );
+                var currentLi = window.app.Methods.createAndSetTag('li', 'calendar-left-side calendar-list-item', ol, '<span>' + getMonth() + '</span>', goInMonthYear );
                 currentLi.setAttribute('index', i);
                 ol.appendChild(currentLi);
             }
@@ -183,11 +184,11 @@
 
         function goInMonthYear(event) {
             if(document.querySelector('.calendar-list-month')) {
-                localStorage.setItem('month', this.getAttribute('index'));
+                localeStorage.setItem('month', this.getAttribute('index'));
                 new window.app.Calendar().createCalendar();
             }
             if(document.querySelector('.calendar-list-year')) {
-                localStorage.setItem('year', this.getAttribute('index'));
+                window.app.storage.setData('year', this.getAttribute('index'));
                 showMonthList();
             }
             ShowDateMethods.showDate();

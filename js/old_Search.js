@@ -1,4 +1,4 @@
-(function() {
+(function (window) {
     'use strict';
 
     function Search() {
@@ -127,8 +127,8 @@
 
             var goToDate = window.app.ShowDateMethods.parseStrInDate(strGoToDate);
 
-            localStorage.setItem('month', goToDate.getMonth());
-            localStorage.setItem('year', goToDate.getFullYear());
+            window.app.storage.setData('month', goToDate.getMonth());
+            window.app.storage.setData('year', goToDate.getFullYear());
 
             new window.app.Calendar().createCalendar();
             window.app.ShowDateMethods.showDate();
@@ -151,4 +151,4 @@
 
     window.app = window.app || {};
     window.app.Search = Search;
-})();
+})(window);

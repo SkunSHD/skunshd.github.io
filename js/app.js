@@ -2,21 +2,25 @@
 (function() {
     'use strict';
 
-    function MyApp() {}
+    /**
+     * calendar - app
+     *
+     * @description
+     *  Single instance of calendar application. It is an object literal because we need only one exemplar of it.
+     *
+     * @type {{init: init}}
+     */
+    var calendar = {
+        init: function() {
+			// Header
+			this.header = new app.Header();
+			this.header.init();
 
-    MyApp.prototype.init = function() {
-        this.showDateMethods = app.ShowDateMethods;
-        this.showDateMethods.showDate();
+			// Main page
+            app.main.init();
+        }
+    };
 
-        this.calendar = new app.Calendar();
-        this.calendar.createCalendar();
-
-        this.search = new app.Search();
-        this.search.start();
-    }
-
-    var myApplication = new MyApp();
-
-    window.addEventListener('load', myApplication.init(), false);
+    window.addEventListener('load', calendar.init(), false);
 
 })();

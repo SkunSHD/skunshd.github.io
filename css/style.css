@@ -55,7 +55,7 @@ input[type="search"] {
     background: transparent url("../img/sp-bg.png") no-repeat scroll 0 0;
     background-position: -87px 0px;
 }
-/*Date and date navigation*/
+/*Date navigation*/
 .date-indicator {
 	display: inline-block;
 	height: 20px;
@@ -90,7 +90,7 @@ a#button-next {
 	background-position: 0px -21px;
 }
 /*Months navigation block*/
-#today-button {
+#button-today {
 	text-align: center;
 	background: transparent url("../img/sp-bg.png") no-repeat scroll 0 0;
 	background-position: -23px 0px;
@@ -102,7 +102,7 @@ a#button-next {
 	padding-top: 2px;
 	cursor: pointer;
 }
-/*Таблица с датами*/
+/*Tabel with dates*/
 h5 {
 	margin: 5px 0 0 0;
 }
@@ -131,6 +131,12 @@ td:hover {
 col {
 	border: 1px solid #E6E6E6;
 }
+ol {
+	width: 1000px;
+	position: relative;
+	left: -40px;
+    top: -10px;
+}
 .pre-post span {
 	color: #DED9D9;
 }
@@ -152,6 +158,11 @@ td p {
 }
 .event-names {
 	margin-top: 5px;
+}
+ol li span:last-child {
+	position: relative;
+	top: 87px;
+    right: 10px;
 }
 /* Fast add popup window */
 .fast-add-container {
@@ -252,8 +263,11 @@ td p {
 .td-with-note  {
 	background: #EBFFF2;
 }
- h5  {
+h4  {
 	color: #4C4C4C;
+}
+h4, p {
+	margin: 5px 0;
 }
 /*Add event Window*/
 input, textarea {
@@ -361,13 +375,22 @@ input[name='eventEdit'] {
     color: #999;
     font-size: 12px;
     border: 1px solid #ebebeb;
-    width: 225px;
-    height: 150px;
+    width: 107px;
+    height: 97px;
     padding: 10px;
-    text-align: center;
     overflow: hidden;
 }
-.calendar-list-item:hover {
+.calendar-list-months, .calendar-list-years {
+	display: block;
+    color: #999;
+    font-size: 12px;
+    border: 1px solid #ebebeb;
+    width: 128px;
+    height: 105px;
+    padding: 10px;
+    overflow: hidden;
+}
+.calendar-list-item:hover, .calendar-list-months:hover, .calendar-list-years:hover{
 	border: 1px solid #85C6FA;
 	cursor: pointer;
 }
