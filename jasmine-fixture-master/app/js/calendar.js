@@ -184,9 +184,12 @@
 			
             calendar = addDaysNames(calendar);
 
-            cache[year][month] = { calendar: function () {
-                return calendar.cloneNode(true)
-            }, label: months[month] + " " + year };
+            cache[year][month] = {
+				calendar: function () {
+					return calendar.cloneNode(true);
+				}, 
+				label: months[month] + " " + year
+			};
             return cache[year][month];
         };
 		
@@ -335,7 +338,8 @@
         };
 
 		return {
-			init: init
+			init: init,
+			generateCalendar: generateCalendar
 		};
 
 	})();
