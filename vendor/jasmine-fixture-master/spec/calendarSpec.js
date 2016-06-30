@@ -1,1 +1,0 @@
-describe ('Calendar', function () {	describe ('Should be', function () {		it ('returned calendar object', function () {			expect(app.calendar.generateCalendar()).toBeDefined();		});	});});

@@ -2,15 +2,15 @@
 	'use strict'
 	
 	var subcalone = (function () {
-	
+		var cache = cache || {};
+		
 		var generateCalendar = function (year, month) {
-			var day = 1, i, j;
-			var haveDays = true;
+			var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 			var daysInMonths = [31, (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0)) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+			var haveDays = true;
+			var day = 1, i, j;
 			var calendar = [];
 			var postFirstDay = 1;
-			var cache = cache || {};
-			var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 			var getStartDay = function () {
 				var sd = new Date(year, month, day).getDay();
@@ -86,7 +86,7 @@
 				calendar: function () {
 					return calendar.cloneNode(true)
 				},
-				label: months[month] + " " + year 
+				label: months[month] + " " + year
 			};
 			return cache[year][month];
 		};
@@ -105,12 +105,17 @@
 			return dateCopy;
 		};
 		
+		var createCalendar = function (year, month) {
+			return generateCalendar(year, month);
+		};
+		
 		return {
-			generateCalendar: generateCalendar
+			createCalendar: createCalendar
 		};
 		
 	})();
 	
 	window.app = window.app || {};
 	window.app.subcalone = subcalone;
+	
 })(window);

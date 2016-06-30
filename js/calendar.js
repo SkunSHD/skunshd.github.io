@@ -2,7 +2,7 @@
     'use strict';
 	
 	var calendar = (function () {
-		var generateCalendar = window.app.subcalone.generateCalendar;
+		var generateCalendar = window.app.subcalone.createCalendar;
 		
 		var wrap, todayBtn, label, container, months, target, cache = cache || {};
 
