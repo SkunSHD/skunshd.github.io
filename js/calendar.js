@@ -11,7 +11,7 @@
 
             wrap = document.getElementById('content');
             todayBtn = document.getElementById('button-today');
-            label = document.querySelector('.date-indicator');
+            label = document.querySelector('#date-indicator');
 
             //cache to use it later without looking up again
             container = document.getElementById('container');

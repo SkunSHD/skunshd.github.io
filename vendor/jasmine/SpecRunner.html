@@ -12,91 +12,19 @@
   <script src="lib/jasmine-2.4.1/boot.js"></script>
   <script src="lib/jasmine-2.4.1/jquery-1.8.3.js"></script>
   <script src="lib/jasmine-2.4.1/jasmine-jquery.js"></script>
-
+	
 	<!-- include source files here... -->
 	<script src="../lib/underscore-min.js"></script>
 	<script src="../../js/template.js"></script>
 	<script src="../../js/sub_calendar_one.js"></script>
+	<script src="../../js/calendar.js"></script>
 
 
 	<!-- include spec files here... -->
-	<script src="spec/sub_calendar_oneSpec.js"></script>
+	<script src="spec/testFixturesSpec.js"></script>
 	
-	<script type="text/javascript">
-     var MSG = "Hello World!";
-
-     function hideMessage() {
-       $( "#pMsg" ).html("");
-     }
-
-     function showMessage() {
-       $( "#pMsg" ).html(MSG); 
-     }
-
-     function setUpHTMLFixture() {
-       setFixtures('<form id="testForm" action="">'
-                  +'  <h1>Test Form</h1>'
-                  +'  <input type="text" id="txtMessage">'
-                  +'  <br>'
-                  +'  <button id="btnHideMessage" type="button" onclick="hideMessage()">Hide Message</button>'
-                  +'  <button id="btnShowMessage" type="button" onclick="showMessage()">Show Message</button>'
-                  +'  <br>'
-                  +'  <p id="pMsg"></p>'
-                  +'</form>');
-
-    }
-
-describe("DOM TESTS:***************", function() { 
-  describe("Button Click Event Tests", function() {
-    var spyEvent;
-
-    beforeEach(function() {
-      setUpHTMLFixture();
-    });
-
-    it ("should invoke the btnShowMessage click event.", function() {
-      spyEvent = spyOnEvent('#btnShowMessage', 'click');
-      $('#btnShowMessage').trigger( "click" );
-
-      expect('click').toHaveBeenTriggeredOn('#btnShowMessage');
-      expect(spyEvent).toHaveBeenTriggered();
-    });
-
-    it ("should invoke the btnHideMessage click event.", function() {
-      spyEvent = spyOnEvent('#btnHideMessage', 'click');
-      $('#btnHideMessage').trigger( "click" );
-
-      expect('click').toHaveBeenTriggeredOn('#btnHideMessage');
-      expect(spyEvent).toHaveBeenTriggered();
-    });
-  });
-
-  describe("Show message tests", function() {
-    beforeEach(function() {
-      setUpHTMLFixture();
-      $('#txtMessage').val(MSG);
-      $('#btnShowMessage').trigger( "click" );
-    });
-
-    it ("should display the message when button is clicked.", function() {
-      expect($('#pMsg')).toHaveText($('#txtMessage').val());
-    });
-  });
-
-  describe("Hide message tests", function() {
-    beforeEach(function() {
-      setUpHTMLFixture();
-      $('#pMsg').text(MSG);
-      $('#btnHideMessage').trigger( "click" );
-    });
-
-    it ("should remove the message when button is clicked.", function() {
-      expect($('#pMsg')).toHaveText("");
-    });
-  });
-});
-</script>
-
+	
+	
 </head>
 
 <body>
