@@ -1,62 +1,90 @@
 (function (window) {
     'use strict';
+	
+	var calendar = (function () {
+		var generateCalendar = window.app.subcalone.createCalendar;
+		
+		var wrap, todayBtn, label, container, months, target, cache = cache || {};
 
-    var calendar = {
-        init: function () {
-            this.months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-			
-            this.wrap = document.getElementById('content');
-            this.todayBtn = document.getElementById('button-today');
-            this.label = document.querySelector('.date-indicator');
+		var init = function () {
+            months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+            wrap = document.getElementById('content');
+            todayBtn = document.getElementById('button-today');
+            label = document.querySelector('#date-indicator');
 
             //cache to use it later without looking up again
-            this.container = document.getElementById('container');
+            container = document.getElementById('container');
 
-            //store reference to proper context
-            var _self = this;
+            registerEvents();
+        };
+		
+		var registerEvents = function() {
 
-            this.wrap.querySelector('#button-previous').addEventListener('click', function () {
-                _self.switchMonth(false);
+            wrap.querySelector('#button-previous').addEventListener('click', function () {
+                switchMonth('prev');
             });
-            this.wrap.querySelector('#button-next').addEventListener('click', function () {
-                _self.switchMonth(true);
+            wrap.querySelector('#button-next').addEventListener('click', function () {
+                switchMonth('next');
             });
 
-            this.todayBtn.addEventListener('click', function () {
-                _self.switchMonth(null, new Date().getMonth(), new Date().getFullYear());
+            todayBtn.addEventListener('click', function () {
+                switchMonth('today');
             });
-            this.todayBtn.click();
 
-            this.label.addEventListener('click', function () {
-                _self.switchMonthsList(null, _self.label.textContent.trim().split(" ")[1] || _self.label.textContent.trim(), 'label');
+            //show today by default
+            switchMonth('today');
+
+            label.addEventListener('click', function () {
+                switchMonthsList('label');
             });
-        },
-
-        switchMonth: function (next, month, year) {
-			if (!month && !year && document.querySelector('.curr-months')) {
-				this.switchMonthsList(next, null, 'arrow');
-				return;
-			} else if (!month && !year && document.querySelector('.curr-years')) {
-				this.switchYearsList(next, null, 'arrow');
-				return;
+        };
+		
+		var switchMonth = function (context) {
+			var next, month, year;
+			switch(context) {
+				case 'next':
+				next = true;
+				break;
+				case 'prev':
+				next = false;
+				break;
+				case 'today':
+				next = null;
+				month = new Date().getMonth();
+				year = new Date().getFullYear();
+				break;
+				case 'select month':
+				next = null;
+				month = months.indexOf(target.textContent);
+				year = label.textContent.trim();
+				break;
 			}
 			
-            var curr = this.label.textContent.trim().split(" ");
+            if (!month && !year && document.querySelector('.curr-months')) {
+                switchMonthsList(context);
+                return;
+            } else if (!month && !year && document.querySelector('.curr-years')) {
+                switchYearsList(next, null);
+                return;
+            }
+
+            var curr = label.textContent.trim().split(" ");
             var tempYear = parseInt(curr[1], 10);
             var cal;
 
-            if (!month && month != '0'	) {
+            if (!month && month != '0') {
                 if (next) {
                     if (curr[0] === "December") {
                         month = 0;
                     } else {
-                        month = this.months.indexOf(curr[0]) + 1;
+                        month = months.indexOf(curr[0]) + 1;
                     }
                 } else {
                     if (curr[0] === "January") {
                         month = 11;
                     } else {
-                        month = this.months.indexOf(curr[0]) - 1;
+                        month = months.indexOf(curr[0]) - 1;
                     }
                 }
             }
@@ -70,199 +98,152 @@
                 }
             }
             // create new calendar, delete old one, insert new one, insert label
-            cal = this.generateCalendar(year, month);
+            cal = generateCalendar(year, month);
 
-            this.container.removeChild(this.wrap.querySelector('.curr-days') || this.wrap.querySelector('.curr-months') || this.wrap.querySelector('.curr-years'));
-            this.container.appendChild(cal.calendar());
-            this.label.textContent = cal.label;
-        },
+            container.removeChild(wrap.querySelector('.curr-days') || wrap.querySelector('.curr-months') || wrap.querySelector('.curr-years'));
+            container.appendChild(cal.calendar());
+            label.textContent = cal.label;
+        };
+		
+		// Stole code here
+		
+		var switchMonthsList = function (context) {
+			var year, tempYear, monthsList, next;
+			switch (context) {
+				case 'label':
+				year = label.textContent.trim().split(" ")[1] || label.textContent.trim();
+				break;
+				case 'select year':
+				year = target.textContent;
+				break;
+				case 'next':
+				next = true;
+				break;
+				case 'prev':
+				next = false;
+				break;
+			};
+			
+            if (document.querySelector('.curr-years') && context == 'label') {
+                return;
+            } else if (document.querySelector('.curr-months') && context == 'label') {
+                switchYearsList(null, year);
+                return;
+            }
 
-        generateCalendar: function(year, month) {
-            var day = 1, i, j;
-            var haveDays = true;
-            var daysInMonths = [31, (((year%4==0)&&(year%100!=0))||(year%400==0)) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-            var calendar = [];
-            var startDay = new Date(year, month, day).getDay();
-            this.cache = {};
+            tempYear = parseInt(label.textContent.trim(), 10);
 
-            // mon==0 ... san==6
-            if (startDay == 0) startDay = 6;
-            else startDay -= 1;
-    
-            if (this.cache[year]) {
-                if (this.cache[year][month]) {
-                    return this.cache[year][month];
+            if (!year) {
+                if (next) {
+                    year = tempYear + 1;
+                } else if (!next) {
+                    year = tempYear - 1;
                 }
+            }
+
+            monthsList = createMonthsList();
+
+            var tempEl = document.querySelector('.curr-days') || document.querySelector('.curr-months') || document.querySelector('.curr-years');
+            tempEl.parentNode.replaceChild(monthsList.monthsList(), tempEl);
+
+            label.textContent = year;
+
+            var addedMonthsList = document.querySelector('.curr-months');
+            addedMonthsList.addEventListener('click', monthsHandler, false);
+        };
+
+        var monthsHandler = function (event) {
+            event = event || window.event;
+            target = event.target || event.srcElement;
+            switchMonth('select month');
+        };
+
+        var createMonthsList = function () {
+            var year = label.textContent.trim().split(' ')[1], curr, resMonList, tempEl;
+
+            if (cache['months-list']) {
+                return cache['months-list'];
             } else {
-                this.cache[year] = {};
-            }
-    
-            i = 0;
-            while (haveDays) {
-                calendar[i] = [];
-                for (j = 0; j < 7; j++) {
-                    if (i === 0) {
-                        if (j === startDay) {
-                            calendar[i][j] = day++;
-                            startDay++;
-                        }
-                    } else if (day <= daysInMonths[month]) {
-                        calendar[i][j] = day++;
-                    } else {
-                        calendar[i][j] = "";
-                        haveDays = false;
-                    }
-                    if (day > daysInMonths[month]) {
-                        haveDays = false;
-                    }
-                }
-                i++;
-            }
-            if (calendar[5]) {
-                for (i = 0; i < calendar[5].length; i++) {
-                    if (calendar[5][i] !== "") {
-                        calendar[4][i] = "<span>" + calendar[4][i] + "</span><span>" + calendar[5][i] + "</span>";
-                    }
-                }
-                calendar = calendar.slice(0, 5);
-            }
-			
-			for (i = 0; i < calendar.length; i++) {
-				calendar[i] = _.template(app.templates.li)({arr: calendar[i]});
-			}
-			
-            calendar = '<ol class="curr-days">' + calendar.join("") + "</ol>";
-            var tempWrap= document.createElement('div');
-            tempWrap.innerHTML = calendar;
-            calendar = tempWrap.firstChild;
-    
-            // adding class 'nil' to empty li elements and 'today' for today day
-            for (i=0; i<calendar.childNodes.length; i++) {
-                if (calendar.children[i].textContent == '') {
-                    calendar.children[i].className += ' nil';
-                }
-                if (calendar.children[i].textContent === new Date().getDate().toString()) {
-                    calendar.children[i].className += ' today';
-                }
+                cache['months-list'] = {};
             }
 
-            this.cache[year][month] = { calendar : function () { return calendar.cloneNode(true) }, label : this.months[month] + " " + year };
-            return this.cache[year][month];
-        },
-		
-		switchMonthsList: function (next, year, context) {
-			if (document.querySelector('.curr-years') && context == 'label') {
-				return;
-			} else if (document.querySelector('.curr-months') && context == 'label') {
-				this.switchYearsList(null, year);
-				return;
-			}
-			
-			var tempYear = parseInt(this.label.textContent.trim(), 10), monthsList;
+            resMonList = _.template(app.templates.monthLi)({arr: months});
+            resMonList = '<ol class="curr-months">' + resMonList + '</ol>';
+            tempEl = document.createElement('div');
+            tempEl.innerHTML = resMonList;
+            resMonList = tempEl.firstChild;
+            resMonList = resMonList.cloneNode(true);
 
-			if (!year) {
-				if (next) {
-					year = tempYear + 1; 
-				} else if (!next) {
-					year = tempYear - 1; 
-				}
-			}
-			
-			monthsList = this.createMonthsList();
+            cache['months-list'] = { monthsList: function () {
+                return resMonList
+            } };
+            return cache['months-list'];
+        };
 		
-			var tempEl = document.querySelector('.curr-days') || document.querySelector('.curr-months') || document.querySelector('.curr-years');
-			tempEl.parentNode.replaceChild(monthsList.monthsList(), tempEl);
-			
-			this.label.textContent = year;
-			
-			var addedMonthsList = document.querySelector('.curr-months');
-			addedMonthsList.addEventListener('click', this.monthsHandler.bind(this), false);
-		},
-		
-		monthsHandler: function (event) {
-			event = event || window.event;
-			var target = event.target || event.srcElement;
-			this.switchMonth(null, this.months.indexOf(target.textContent), this.label.textContent.trim());
-		},
-		
-		createMonthsList: function () {
-			this.cache = {};
-			var year = this.label.textContent.trim().split(' ')[1], curr, resMonList, tempEl;
+		var switchYearsList = function (next, year) {
+            if (!year) {
+                var tempYear = label.textContent.split(' - ')[0];
+                tempYear = +tempYear + 6;
+                if (next) {
+                    year = tempYear + 12;
+                } else {
+                    year = tempYear - 12;
+                }
+            }
+            var start = +year - 6, end = +year + 5;
 
-			if (this.cache['months-list']) {
-				return this.cache['months-list']; 
-			} else {
-				this.cache['months-list'] = {}; 
-			}
+            var yearsList = createYearsList(year);
 
-			resMonList = _.template(app.templates.monthLi)({arr: this.months});
-			resMonList = '<ol class="curr-months">' + resMonList + '</ol>';
-			tempEl = document.createElement('div');
-			tempEl.innerHTML = resMonList;
-			resMonList = tempEl.firstChild;
-			resMonList = resMonList.cloneNode(true);
-			
-			this.cache['months-list'] = { monthsList : function () { return resMonList } }; 
-			return this.cache['months-list'];
-		},
-		
-		switchYearsList: function (next, year, context) {
-				if (!year) {
-					var tempYear = this.label.textContent.split(' - ')[0];
-					tempYear = +tempYear + 6;
-					if (next) {
-						year = tempYear + 12;
-					} else {
-						year = tempYear - 12;
-					}
-				}
-				var start = +year-6, end = +year+5;
+            var tempEl = document.querySelector('.curr-days') || document.querySelector('.curr-months') || document.querySelector('.curr-years');
+            tempEl.parentNode.replaceChild(yearsList.yearsList(), tempEl);
 
-				var yearsList = this.createYearsList(year);
-				
-				var tempEl = document.querySelector('.curr-days') || document.querySelector('.curr-months') || document.querySelector('.curr-years');
-				tempEl.parentNode.replaceChild(yearsList.yearsList(), tempEl);
-				
-				this.label.textContent = start + ' - ' + end;
-				
-				var addedYearsist = document.querySelector('.curr-years');
-				addedYearsist.addEventListener('click', this.yearsHandler.bind(this), false);
-			},
-			
-			yearsHandler: function (event) {
-				event = event || window.event;
-				var target = event.target || event.srcElement;
-				this.switchMonthsList(null, target.textContent);
-			},
-			
-			createYearsList: function (year) {
-				this.cache = {};
-				
-				if (this.cache[year]) {
-					return this.cache[year];
-				} else {
-					this.cache[year] = {};
-				}
-				
-				var resYearsList = new Array(12), start, i;
-				start = year - 6;
-				
-				for (i=0; i<resYearsList.length; i++) resYearsList[i] = start + i;
-				
-				resYearsList = _.template(app.templates.monthLi)({arr: resYearsList});
-				
-				resYearsList = '<ol class="curr-years">' + resYearsList + '</ol>';
-				var tempEl = document.createElement('div');
-				tempEl.innerHTML = resYearsList;
-				resYearsList = tempEl.firstChild;
-				resYearsList = resYearsList.cloneNode(true);
-				
-				this.cache[year] = { yearsList : function () { return resYearsList } }; 
-				return this.cache[year];
-			}
-    };
+            label.textContent = start + ' - ' + end;
+
+            var addedYearsist = document.querySelector('.curr-years');
+            addedYearsist.addEventListener('click', yearsHandler, false);
+        };
+
+        var yearsHandler = function (event) {
+            event = event || window.event;
+            target = event.target || event.srcElement;
+            switchMonthsList('select year');
+        };
+
+        var createYearsList = function (year) {
+            cache['years-list'] = cache['years-list'] || {};
+
+            if (cache['years-list'][year]) {
+                return cache['years-list'][year];
+            } else {
+                cache['years-list'][year] = {};
+            }
+
+            var resYearsList = new Array(12), start, i;
+            start = year - 6;
+
+            for (i = 0; i < resYearsList.length; i++) resYearsList[i] = start + i;
+
+            resYearsList = _.template(app.templates.monthLi)({arr: resYearsList});
+
+            resYearsList = '<ol class="curr-years">' + resYearsList + '</ol>';
+            var tempEl = document.createElement('div');
+            tempEl.innerHTML = resYearsList;
+            resYearsList = tempEl.firstChild;
+            resYearsList = resYearsList.cloneNode(true);
+
+            cache['years-list'][year] = { yearsList: function () {
+                return resYearsList
+            } };
+            return cache['years-list'][year];
+        };
+
+		return {
+			init: init
+		};
+
+	})();
 
     window.app = window.app || {};
     window.app.calendar = calendar;
 
-})(window);
+})(window);	
