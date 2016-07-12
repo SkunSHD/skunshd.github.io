@@ -105,8 +105,6 @@
             label.textContent = cal.label;
         };
 		
-		// Stole code here
-		
 		var switchMonthsList = function (context) {
 			var year, tempYear, monthsList, next;
 			switch (context) {
